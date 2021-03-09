@@ -19,6 +19,7 @@ import java.util.Map;
 @WebListener
 public class Initializer implements ServletContextListener {
     public static ArrayList<ProductCategory> categoryList = new ArrayList<>();
+    public static ArrayList<Supplier> supplierList = new ArrayList<>();
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -35,6 +36,11 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(wacom);
         Supplier asus = new Supplier("Asus", "Computers");
         supplierDataStore.add(asus);
+
+        supplierList.add(amazon);
+        supplierList.add(lenovo);
+        supplierList.add(wacom);
+        supplierList.add(asus);
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
@@ -58,7 +64,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Whether for work or play, ASUS X515 is the entry-level laptop that delivers powerful performance and immersive visuals.\n", tablet, amazon));
-        productDataStore.add(new Product("Asus X515MA-BR228T Notebook", 605, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", laptop, amazon));
+        productDataStore.add(new Product("Asus X515MA-BR228T Notebook", 605, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", laptop, asus));
         productDataStore.add(new Product("Cintiq 22HD", 1200, "USD", "A high-definition pen display designed for creative professionals.", penDisplay, wacom));
         productDataStore.add(new Product("Lenovo IdeaPad YOGA S940", 1700, "USD", "Exceptionally designed without compromise. Run your programs faster with Premium Intel® Core™ processing.", laptop, lenovo));
         productDataStore.add(new Product("Lenovo ThinkPad T14s", 800, "USD", "Heavyweight performance that won’t weigh you down. Perfect for the on-the-go or work from home professional.", laptop, lenovo));

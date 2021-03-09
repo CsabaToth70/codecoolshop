@@ -3,9 +3,11 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.Initializer;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -33,19 +35,28 @@ public class ProductController extends HttpServlet {
         context.setVariable("category", productCategoryDataStore.find(2));
         context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(2)));
         context.setVariable("categoryList", Initializer.categoryList);
+        context.setVariable("supplierList", Initializer.supplierList);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int categoryID = Integer.parseInt(request.getParameter("categoryList"));
+        String dropdown = request.getParameter("dropdown");
+
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-
+        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
-        context.setVariable("category", productCategoryDataStore.find(categoryID));
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
+
+        if (dropdown.equals("category")) {
+            int categoryID = Integer.parseInt(request.getParameter("categoryList"));
+            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
+        } else if (dropdown.equals("supplier")) {
+            int supplierID = Integer.parseInt(request.getParameter("supplierList"));
+            context.setVariable("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
+        }
+        context.setVariable("supplierList", Initializer.supplierList);
         context.setVariable("categoryList", Initializer.categoryList);
         engine.process("product/index.html", context, response.getWriter());
     }
