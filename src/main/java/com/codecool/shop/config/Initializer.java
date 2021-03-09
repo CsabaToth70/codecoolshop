@@ -13,9 +13,12 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.ArrayList;
+import java.util.Map;
 
 @WebListener
 public class Initializer implements ServletContextListener {
+    public static ArrayList<ProductCategory> categoryList = new ArrayList<>();
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -31,7 +34,7 @@ public class Initializer implements ServletContextListener {
         Supplier wacom = new Supplier("Wacom", "Drawing Tablets");
         supplierDataStore.add(wacom);
         Supplier asus = new Supplier("Asus", "Computers");
-        supplierDataStore.add(wacom);
+        supplierDataStore.add(asus);
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
@@ -45,6 +48,12 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(penDisplay);
         productCategoryDataStore.add(penTablet);
 
+        categoryList.add(tablet);
+        categoryList.add(laptop);
+        categoryList.add(penComputer);
+        categoryList.add(penDisplay);
+        categoryList.add(penTablet);
+
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
@@ -53,7 +62,6 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Cintiq 22HD", 1200, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", penDisplay, wacom));
         productDataStore.add(new Product("Lenovo IdeaPad YOGA S940", 1700, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", laptop, lenovo));
         productDataStore.add(new Product("Lenovo ThinkPad T14s", 800, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", laptop, lenovo));
-        productDataStore.add(new Product("Lenovo Yoga 9", 1540, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", laptop, lenovo));
         productDataStore.add(new Product("Lenovo Yoga 9", 1540, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", laptop, lenovo));
         productDataStore.add(new Product("MobileStudio Pro 16", 3500, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", penComputer, wacom));
         productDataStore.add(new Product("One by Wacom", 70, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", penTablet, wacom));
