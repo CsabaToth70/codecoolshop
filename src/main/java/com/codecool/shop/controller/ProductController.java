@@ -33,14 +33,20 @@ public class ProductController extends HttpServlet {
         context.setVariable("category", productCategoryDataStore.find(2));
         context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(2)));
         context.setVariable("categoryList", Initializer.categoryList);
-
-        //Map<String, Object> params = new HashMap<>();
-        // // Alternative setting of the template context
-        // Map<String, Object> params = new HashMap<>();
-        // params.put("category", productCategoryDataStore.find(1));
-        // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-        // context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int categoryID = Integer.parseInt(request.getParameter("categoryList"));
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        context.setVariable("category", productCategoryDataStore.find(categoryID));
+        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
+        context.setVariable("categoryList", Initializer.categoryList);
+        engine.process("product/index.html", context, response.getWriter());
+    }
 }

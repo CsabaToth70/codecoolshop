@@ -36,10 +36,14 @@
 
 <div class="container">
     <div class="card">
-        <select th:field="${categoryList}">
-            <option th:each="category,iterStat : ${categoryList}" th:value="${category.getId()}" th:text="${category.getName()}">
-            </option>
-        </select>
+        <form action="ReadParams" method="post">
+    <!--        <strong th:text="${category.name}">Category Title</strong>-->
+            <select th:field="${categoryList}" name="categoryList">
+                <option th:each="category,iterStat : ${categoryList}" th:value="${category.getId()}" th:text="${category.getName()}">
+                </option>
+            </select>
+            <input type = "submit" value = "Submit" />
+        </form>
     </div>
 
     <div id="products" class="row">
