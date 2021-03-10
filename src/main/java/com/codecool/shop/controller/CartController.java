@@ -8,6 +8,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -27,11 +28,15 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        int subtotal = 0;
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(2)));
+        for (Product item : ProductController.cart) {
+            int price = (int) item.getDefaultPrice() * item.getQuantity();
+            subtotal = subtotal + price;
+        }
+        System.out.println(subtotal);
+        context.setVariable("products", ProductController.cart);
         engine.process("product/cart.html", context, resp.getWriter());
 
     }
