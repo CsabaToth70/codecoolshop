@@ -8,6 +8,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -26,6 +27,7 @@ import java.util.Map;
 public class ProductController extends HttpServlet {
     private int categoryID = 0;
     private int supplierID = 0;
+    public static ArrayList<Product> cart = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,7 +54,8 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(request, response, request.getServletContext());
 
         if (addToCart != null) {
-            System.out.println("Cart");
+            int itemID = Integer.parseInt(request.getParameter("addToCart"));
+            addToCart(itemID);
         }
 
         if (dropdown == null) {
@@ -81,5 +84,12 @@ public class ProductController extends HttpServlet {
         context.setVariable("categoryList", Initializer.categoryList);
         engine.process("product/index.html", context, response.getWriter());
     }
-}
 
+    static void addToCart(int itemID) {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        Product product = productDataStore.find(itemID);
+        cart.add(product);
+        System.out.println(cart);
+
+    }
+}
