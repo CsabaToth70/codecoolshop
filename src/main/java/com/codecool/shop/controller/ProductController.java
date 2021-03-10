@@ -8,6 +8,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -26,6 +27,7 @@ import java.util.Map;
 public class ProductController extends HttpServlet {
     private int categoryID = 0;
     private int supplierID = 0;
+    public static ArrayList<Product> cart = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,14 +54,12 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(request, response, request.getServletContext());
 
         if (addToCart != null) {
-            System.out.println("Cart");
-        }
-
-        if (dropdown == null) {
+            int itemID = Integer.parseInt(request.getParameter("addToCart"));
+            addToCart(itemID);
             if (supplierID != 0) {
-                context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
-            } else if (categoryID != 0) {
                 context.setVariable("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
+            } else if (categoryID != 0) {
+                context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(categoryID)));
             } else {
                 context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
             }
@@ -81,5 +81,30 @@ public class ProductController extends HttpServlet {
         context.setVariable("categoryList", Initializer.categoryList);
         engine.process("product/index.html", context, response.getWriter());
     }
-}
 
+    public void addToCart(int itemID) {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        Product product = productDataStore.find(itemID);
+        if (cart.size() == 0) {
+            product.setQuantity(1);
+            cart.add(product);
+        } else {
+            boolean used = checkItems(itemID);
+            if (!used) {
+                product.setQuantity(1);
+                cart.add(product);
+            }
+        }
+        System.out.println(cart);
+    }
+
+    public boolean checkItems(int itemID) {
+        for (Product item : cart) {
+            if (item.getId() == itemID) {
+                item.setQuantity(item.getQuantity() + 1);
+                return true;
+            }
+        }
+        return false;
+    }
+}
