@@ -36,7 +36,7 @@
 
 <div class="container">
     <div class="card">
-        <form action="ReadParams" method="post">
+        <form method="post">
             <select th:field="${categoryList}" name="categoryList">
                 <option th:each="category,iterStat : ${categoryList}" th:value="${category.getId()}" th:text="${category.getName()}">
                 </option>
@@ -44,7 +44,7 @@
             <input type="hidden" name="dropdown" value="category">
             <input type = "submit" value = "Submit" />
         </form>
-        <form action="ReadParams" method="post">
+        <form method="post">
             <select th:field="${supplierList}" name="supplierList">
                 <option th:each="supplier,iterStat : ${supplierList}" th:value="${supplier.getId()}" th:text="${supplier.getName()}">
                 </option>
@@ -70,7 +70,10 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <form method="post">
+                            <input type="hidden" name="addToCart" value="${prod.id}">
+                            <input class="btn btn-success" type="submit" value = "Add to cart" >
+                        </form>
                     </div>
                 </div>
             </div>
