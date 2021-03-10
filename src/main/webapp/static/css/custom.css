@@ -60,3 +60,33 @@
 {
     margin: 0 0 11px;
 }
+.headerLine {
+    background-image: url("/static/img/darknet2_narrow.jpg") !important;
+    color: #ffffff;
+    height: 150px;
+    width: 100%;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+.sticky + .container {
+    padding-top: 150px;
+}
+#headText {
+    text-align: center;
+    margin-top: 20px;
+    /*vertical-align: middle*/
+}
+
+/*.headerLine.content > h1, .headerLine.content > p {*/
+/*    display: inline-block;*/
+/*}*/
+
+/*.headerLine.cart {*/
+/*    horiz-align: right !important;*/
+/*    vertical-align: middle;*/
+/*    width: 80px*/
+/*}*/

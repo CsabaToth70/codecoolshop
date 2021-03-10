@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:background-image="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <meta name="author" content="Codecool" />
@@ -30,8 +31,10 @@
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+<div class="headerLine"; id="myHeader">
+    <h1 id="headText">Codecool Shop</h1>
+    <span><p><a class="cart" href="/cart"> <img style="width: 80px; margin-right: 45px; vertical-align: middle;
+    float: right" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/cart.png'" alt="" /></a></p></span>
 </div>
 
 <div class="container">
@@ -53,8 +56,6 @@
             <input type = "submit" value = "Submit" />
         </form>
 
-
-        <a class="cart" href="/cart"> <img class="col-sm-4 ml-auto"  style="width: 80px" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/cart.png'" alt="" /></a>
     </div>
 
     <div id="products" class="row">
@@ -84,5 +85,19 @@
 
 <div th:replace="footer.html :: copy"></div>
 
+<script>
+    window.onscroll = function() {myFunction()};
+
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+</script>
 </body>
 </html>
