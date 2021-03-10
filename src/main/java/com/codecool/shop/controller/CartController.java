@@ -35,7 +35,7 @@ public class CartController extends HttpServlet {
             int price = (int) item.getDefaultPrice() * item.getQuantity();
             subtotal = subtotal + price;
         }
-        System.out.println(subtotal);
+        context.setVariable("subtotal", subtotal);
         context.setVariable("products", ProductController.cart);
         engine.process("product/cart.html", context, resp.getWriter());
 

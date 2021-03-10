@@ -95,7 +95,6 @@ public class ProductController extends HttpServlet {
                 cart.add(product);
             }
         }
-        System.out.println(cart);
     }
 
     public boolean checkItems(int itemID) {

@@ -36,81 +36,36 @@
 
 <div class="container">
     <div class="cart">
-<!--        <img class="col-sm-4 ml-auto"  style="width: 80px" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/cart.png'" alt="" />-->
-
-
-        <div class="row">
-            <div class="col">
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                    <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
+        <div id="products" th:each="prod,iterStat : ${products}">
+            <div class="row" style="padding: 15px; border-top: 1px solid">
+                <img class="" style="width: 10%" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <div class="col">
+                        <p class="card-title" th:text="${prod.name}"><small><small>Product name</small></small></p>
                 </div>
-            </div>
-            <div class="col">
-                <div class="collapse multi-collapse" id="multiCollapseExample2">
-                    <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
+                <div class="col">
+                        <form class="form-inline">
+                            <input style="width: 50px; alignment: right; text-align: center" type="text" class="form-control" th:placeholder="${prod.quantity}">
+                        </form>
+                </div>
+                <div class="col">
+                        <p th:text="${prod.defaultPrice} + ' '+ ${prod.defaultCurrency}"><strong>605</strong></p>
+                </div>
+                <div class="col">
+                    <a class="cart" href="/cart"> <img class=""  style="width: 8%" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/x.jpg'" alt="" /></a>
                 </div>
             </div>
         </div>
-                    <div class="row">
-                        <p class="col"></p>
-                        <p class="col">Name</p>
-                        <p class="col">Price</p>
-                    </div>
-
-            <div id="products" th:each="prod,iterStat : ${products}">
-
-            <div class="table table-hover">
-                <div class="row" >
-
-                    <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                        <div class="col">
-                            <div class="h-25 d-inline-block" style="width: 80%;">
-                                <h4 class="card-title" th:text="${prod.name}"><small><small>Product name</small></small></h4>
-                            </div>
-                            <div class="col">
-                                <div class="card-text">
-                                    <p class="lead" th:text="${prod.getPrice()}"><small>100 USD</small></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="h-25 d-inline-block" style="width: 5%;">
-                                <form class="form-inline">
-                                    <input type="text" class="form-control" placeholder="1">
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="h-25 d-inline-block col-md-4 ml-right" style="width: 10%;">
-                                <p><strong>605</strong></p>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="h-25 d-inline-block" style="width: 5%;">
-                                <p>USD</p>
-                            </div>
-                        </div>
-                </div>
+        <div class="row" style="padding: 5px; border-top: 1px solid"></div>
+        <div class="table">
+            <div class="row">
+                <div class="col-md-3 ml-md-auto" th:text="'In total: ' + ${subtotal} + ' USD'"><h2><strong>In total:</strong></h2></div>
             </div>
-
-            </div>
-            <div class="table">
-                <div class="row">
-                    <div class="col-md-3 ml-md-auto"><h2><strong>In total:</strong></h2></div>
-                    <div class="col-auto"><h2><strong>1432</strong></h2></div>
-                    <div class="col-auto"><h2><strong>USD</strong></h2></div>
-                </div>
-            </div>
-
-
-
+        </div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
+
+</div>
 
 </body>
 </html>
