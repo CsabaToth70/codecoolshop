@@ -25,11 +25,10 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
+    public static int subtotal = 0;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String itemI = req.getParameter("id");
-        int subtotal = 0;
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         for (Product item : ProductController.cart) {
