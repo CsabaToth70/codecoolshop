@@ -85,7 +85,7 @@ public class CheckoutController extends HttpServlet {
             int zipC = Integer.parseInt(zipCode);
             Order order = new Order(firstName, lastName, email, phoneNumber, country, city, zipC, ProductController.cart, CartController.subtotal);
             System.out.println(order.toString());
-            response.sendRedirect("http://localhost:8888/cart");
+            response.sendRedirect("http://localhost:8888/payment");
         } else {
             context.setVariable("email", email);
             context.setVariable("country", country);
