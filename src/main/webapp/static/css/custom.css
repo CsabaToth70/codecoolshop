@@ -65,6 +65,7 @@
     color: #ffffff;
     height: 138px;
     width: 100%;
+    z-index: -1;
 }
 
 .sticky {
@@ -77,8 +78,11 @@
 }
 #headText {
     text-align: center;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     /*vertical-align: middle*/
+}
+.cart{
+    background-color: #fff;
 }
 
 /*.headerLine.content > h1, .headerLine.content > p {*/
