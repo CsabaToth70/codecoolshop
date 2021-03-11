@@ -23,38 +23,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/cart"})
-public class CartController extends HttpServlet {
+@WebServlet(urlPatterns = {"/remove"})
+public class RemoveItem extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String itemI = req.getParameter("id");
-        int subtotal = 0;
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        for (Product item : ProductController.cart) {
-            int price = (int) item.getDefaultPrice() * item.getQuantity();
-            subtotal = subtotal + price;
-        }
-        context.setVariable("subtotal", subtotal);
-        context.setVariable("products", ProductController.cart);
-        engine.process("product/cart.html", context, resp.getWriter());
-
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int itemID = Integer.parseInt(request.getParameter("itemID"));
-        int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        Product product = productDataStore.find(itemID);
-        product.setQuantity(itemQuantity);
-        if (itemQuantity == 0) {
+        if (itemI != null) {
+            int itemID = Integer.parseInt(itemI);
             removeItem(itemID);
+            itemI = null;
         }
-        product.setQuantity(itemQuantity);
-        doGet(request, response);
-
+        resp.sendRedirect("http://localhost:8888/cart");
     }
 
     public void removeItem (int itemID) {

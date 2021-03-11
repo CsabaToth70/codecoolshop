@@ -35,33 +35,42 @@
 </div>
 
 <div class="container">
-    <div class="card">
-    </div>
     <div class="cart">
         <div id="products" th:each="prod,iterStat : ${products}">
-            <div class="row" style="padding: 15px; border-top: 1px solid">
-                <img class="" style="width: 10%" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="col">
-                        <p class="card-title" th:text="${prod.name}"><small><small>Product name</small></small></p>
-                </div>
-                <div class="col">
-                        <form class="form-inline">
-                            <input style="width: 50px; alignment: right; text-align: center" type="text" class="form-control" th:placeholder="${prod.quantity}">
-                        </form>
-                </div>
-                <div class="col">
-                        <p th:text="${prod.defaultPrice} + ' '+ ${prod.defaultCurrency}"><strong>605</strong></p>
-                </div>
-                <div class="col">
-                    <a class="cart" href="/cart"> <img class=""  style="width: 8%" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/x.jpg'" alt="" /></a>
+            <div class="cart_item">
+                <div class="row" style="padding: 15px">
+                    <img class="" style="width: 10%" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                    <div class="col" style="display: flex; align-items: center; justify-content: center;">
+                            <h4 class="card-title" th:text="${prod.name}"></h4>
+                    </div>
+                    <div class="col" style="display: flex; align-items: center; justify-content: center;">
+                            <form class="form-inline" method="post">
+                                <input type="hidden" name="itemID" th:value="${prod.id}">
+                                <input name="quantity" style="width: 50px; alignment: right; text-align: center" type="text" class="form-control" th:placeholder="${prod.quantity}">
+                            </form>
+                    </div>
+                    <div class="col" style="display: flex; align-items: center; justify-content: center;">
+                            <h4 th:text="${prod.defaultPrice} + ' '+ ${prod.defaultCurrency}"><strong>605</strong></h4>
+                    </div>
+                    <div class="col" style="display: flex; align-items: center; justify-content: center;">
+                        <a th:href="@{/remove(id = ${prod.id})}"> <img class=""  style="width: 8%" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/x.jpg'" alt="" /></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row" style="padding: 5px; border-top: 1px solid"></div>
-        <div class="table">
-            <div class="row">
-                <div class="col-md-3 ml-md-auto" th:text="'In total: ' + ${subtotal} + ' USD'"><h2><strong>In total:</strong></h2></div>
+        <div class="subtotal">
+            <div class="row" style="float: right">
+                <div th:text="'In total: ' + ${subtotal} + ' USD'"><h2><strong>In total:</strong></h2></div>
             </div>
+        </div>
+        <div class="row" style="padding: 15px; align-items: center">
+            <div class="col" style="display: flex; align-items: center; justify-content: center;">
+                <a class="continue_shopping" href="/">Continue Shopping</a>
+            </div>
+            <div class="col" style="display: flex; align-items: center; justify-content: center;">
+                <a class="checkout" href="/">Checkout</a>
+            </div>
+
         </div>
 </div>
 
