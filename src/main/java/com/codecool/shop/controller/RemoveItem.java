@@ -28,7 +28,6 @@ public class RemoveItem extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CartController cartC = new CartController();
         String itemI = req.getParameter("id");
         if (itemI != null) {
             int itemID = Integer.parseInt(itemI);
@@ -36,7 +35,6 @@ public class RemoveItem extends HttpServlet {
             itemI = null;
         }
         resp.sendRedirect("http://localhost:8888/cart");
-
     }
 
     public void removeItem (int itemID) {
