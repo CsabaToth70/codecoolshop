@@ -3,25 +3,45 @@ package com.codecool.shop.model;
 import java.util.ArrayList;
 
 public class Order {
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String country;
     private String city;
+    private String address;
     private int zipCode;
     private ArrayList<Product> items;
     private int total;
 
-    public Order(String firstName, String lastName, String email, String phoneNumber, String country, String city, int zipCode, ArrayList<Product> items, int total) {
+    public Order(int id, String firstName, String lastName, String email, String phoneNumber, String country, String city, String address, int zipCode, ArrayList<Product> items, int total) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.country = country;
         this.city = city;
+        this.address = address;
         this.zipCode = zipCode;
         this.items = items;
+        this.total = total;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
         this.total = total;
     }
 
@@ -73,6 +93,14 @@ public class Order {
         this.city = city;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public int getZipCode() {
         return zipCode;
     }
@@ -92,7 +120,8 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "firstName='" + firstName + '\'' +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

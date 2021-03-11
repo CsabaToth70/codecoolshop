@@ -19,13 +19,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
+    private ArrayList<Order> orders = new ArrayList<>();
+    private int orderID = 1;
+    public static Order order;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,6 +45,7 @@ public class CheckoutController extends HttpServlet {
         String phoneNumber = request.getParameter("phoneNumber");
         String country = request.getParameter("country");
         String city = request.getParameter("city");
+        String address = request.getParameter("address");
         String zipCode = request.getParameter("zipCode");
 
         boolean checkFirstName = getDigits(firstName);
@@ -83,8 +84,7 @@ public class CheckoutController extends HttpServlet {
 
         if (allValid) {
             int zipC = Integer.parseInt(zipCode);
-            Order order = new Order(firstName, lastName, email, phoneNumber, country, city, zipC, ProductController.cart, CartController.subtotal);
-            System.out.println(order.toString());
+            orderIDGenerator(firstName, lastName, email, phoneNumber, country, city, address, zipC);
             response.sendRedirect("http://localhost:8888/payment");
         } else {
             context.setVariable("email", email);
@@ -105,5 +105,12 @@ public class CheckoutController extends HttpServlet {
             }
         }
         return number;
+    }
+
+    public void orderIDGenerator(String firstName, String lastName, String email, String phoneNumber, String country, String city, String address, int zipC) {
+        Order order = new Order(orderID, firstName, lastName, email, phoneNumber, country, city, address, zipC, ProductController.cart, CartController.subtotal);
+        CheckoutController.order = order;
+        orders.add(order);
+        orderID = orderID + 1;
     }
 }

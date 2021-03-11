@@ -29,22 +29,35 @@ public class PaymentController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
-        engine.process("payment.html", context, resp.getWriter());
+        context.setVariable("paymentMethod", "None");
+        context.setVariable("subtotal", CartController.subtotal);
+        engine.process("product/payment.html", context, resp.getWriter());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, response, request.getServletContext());
-
-        engine.process("payment.html", context, response.getWriter());
+        String paymentMethod = request.getParameter("paymentMethod");
+        if (paymentMethod != null) {
+            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+            WebContext context = new WebContext(request, response, request.getServletContext());
+            context.setVariable("paymentMethod", paymentMethod);
+            context.setVariable("subtotal", CartController.subtotal);
+            engine.process("product/payment.html", context, response.getWriter());
+        } else {
+            String method = request.getParameter("method");
+            if (method.equals("creditCard")) {
+                checkCredit();
+                response.sendRedirect("http://localhost:8888/validation");
+            } else if (method.equals("payPal")) {
+                response.sendRedirect("http://localhost:8888/validation");
+            }
+        }
     }
 
+    public void checkCredit() {
 
+    }
 
 }

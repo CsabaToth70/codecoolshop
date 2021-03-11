@@ -35,22 +35,17 @@
 </div>
 
 <div class="container">
-    <h2 id="subTitle">Payment</h2>
+    <h2 id="subTitle">Order details</h2>
     <br>
     <div class="card">
-        <h3>Choose payment tool</h3>
-        <br>
-        <form action="/checkout">
-            <p>You are going to pay by</p>
-            <input type="radio" id="creditCard" name="paymentMethod">
-            <label for="creditCard">Credit Card</label><br>
-            <input type="radio" id="payPal" name="paymentMethod">
-            <label for="payPal">PayPal</label><br>
-            <input type="submit" value="Submit">
+        <form action="/validation" method="post">
+            <p th:text="'Name: ' + ${order.firstName} + ' ' + ${order.lastName}"></p>
+            <p th:text="'Address: ' + ${order.address}"></p>
+            <p th:text="'City: ' + ${order.city} + ' ' + ${order.zipCode}"></p>
+            <p th:text="'Country: ' + ${order.country}"></p> <br>
+
+            <input type="submit" value="Ok">
         </form>
-
-
-
     </div>
 
 

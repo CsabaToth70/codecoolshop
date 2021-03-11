@@ -32,11 +32,55 @@
 
 <div class="headerLine"; id="myHeader">
     <h1 id="headText">Codecool Shop</h1>
-    <h2 id="subText">Payment by PayPal</h2>
 </div>
 
 <div class="container">
+    <h2 id="subTitle">Payment</h2>
+    <br>
     <div class="card">
+        <h3>Choose payment tool</h3>
+        <br>
+        <h5 th:text="'In total: ' + ${subtotal} + ' USD'"></h5> <br> <br>
+        <form action="/payment" method="post">
+            <p>You are going to pay by</p>
+            <input type="radio" id="creditCard" name="paymentMethod" th:value="creditCard">
+            <label for="creditCard">Credit Card</label><br>
+            <input type="radio" id="payPal" name="paymentMethod" th:value="payPal">
+            <label for="payPal">PayPal</label><br>
+            <input type="submit" value="Ok">
+        </form>
+        <br> <br>
+
+        <form method="post" th:if="${paymentMethod == 'creditCard'}">
+            <label for="cardNumber">Card number:</label>
+            <input type="text" id="cardNumber" name="cardNumber" required><br><br>
+
+            <label for="cardHolder">Card holder:</label>
+            <input type="text" id="cardHolder" name="cardHolder" required><br><br>
+
+            <label for="expiryDate">Expiry date:</label>
+            <input type="month" id="expiryDate" name="expiryDate" required><br><br>
+
+            <label for="cardCode">Card code:</label>
+            <input type="text" id="cardCode" name="cardCode" required><br><br>
+
+            <input type="hidden" name="method" value="creditCard">
+            <input type="submit" value="Submit">
+        </form>
+
+        <form method="post" th:if="${paymentMethod == 'payPal'}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" required><br><br>
+
+            <input type="hidden" name="method" value="payPal">
+            <input type="submit" value="Submit">
+        </form>
+
+
+
     </div>
 
 
