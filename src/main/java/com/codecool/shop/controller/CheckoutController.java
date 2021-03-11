@@ -8,6 +8,7 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -81,6 +82,9 @@ public class CheckoutController extends HttpServlet {
         }
 
         if (allValid) {
+            int zipC = Integer.parseInt(zipCode);
+            Order order = new Order(firstName, lastName, email, phoneNumber, country, city, zipC, ProductController.cart, CartController.subtotal);
+            System.out.println(order.toString());
             response.sendRedirect("http://localhost:8888/cart");
         } else {
             context.setVariable("email", email);
