@@ -18,7 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 @WebServlet(urlPatterns = {"/validation"})
@@ -36,9 +36,36 @@ public class Validation extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //TODO: Make JSON with order from CheckoutController
+        createJsonFile(CheckoutController.order);
+        try {
+            getOrderFromFile("shopping_order_" + CheckoutController.order.getId() + ".txt");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         CartController.subtotal = 0;
         ProductController.cart.clear();
         response.sendRedirect("http://localhost:8888/");
     }
-
+    private void createJsonFile(Order order) throws IOException {
+        String filename = "shopping_order_" + order.getId() + ".txt";
+        FileOutputStream fileOutputStream = new FileOutputStream(filename);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(order);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
+        private void getOrderFromFile(String filename) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(filename);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        Order order = (Order) objectInputStream.readObject();
+        objectInputStream.close();
+        displayOrder(order);
+    }
+    private void displayOrder(Order order){
+        System.out.println("\nOrder's data:");
+        System.out.println("Name: " + order.getFirstName() + " " + order.getLastName());
+        System.out.println("E-mail: " + order.getEmail());
+        System.out.println("Ordered products" + order.getItems());
+        System.out.println("Total amount of ordered products: " + order.getTotal() + " USD");
+    }
 }

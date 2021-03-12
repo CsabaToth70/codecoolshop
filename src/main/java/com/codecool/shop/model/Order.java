@@ -1,8 +1,12 @@
 package com.codecool.shop.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Order {
+public class Order implements Serializable {
     private int id;
     private String firstName;
     private String lastName;
@@ -15,7 +19,7 @@ public class Order {
     private ArrayList<Product> items;
     private int total;
 
-    public Order(int id, String firstName, String lastName, String email, String phoneNumber, String country, String city, String address, int zipCode, ArrayList<Product> items, int total) {
+    public Order (int id, String firstName, String lastName, String email, String phoneNumber, String country, String city, String address, int zipCode, ArrayList<Product> items, int total) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -117,6 +121,25 @@ public class Order {
         this.items = items;
     }
 
+//    private void writeObject(ObjectOutputStream out) throws IOException {
+//
+//    }
+//    private void readObject(ObjectInputStream in)
+//            throws IOException, ClassNotFoundException {
+//    }
+    private void writeObject(ObjectOutputStream oos)
+            throws IOException {
+        oos.defaultWriteObject();
+        oos.writeObject(total);
+    }
+
+    private void readObject(ObjectInputStream ois)
+            throws ClassNotFoundException, IOException {
+        ois.defaultReadObject();
+        Integer total = (Integer) ois.readObject();
+        Integer a = total;
+        this.setTotal(a);
+    }
     @Override
     public String toString() {
         return "Order{" +
