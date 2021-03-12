@@ -34,6 +34,7 @@ public class RemoveItem extends HttpServlet {
             removeItem(itemID);
             itemI = null;
         }
+        CartController.subtotal = 0;
         resp.sendRedirect("http://localhost:8888/cart");
     }
 

@@ -47,7 +47,6 @@ public class CartController extends HttpServlet {
         int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
         ProductDao productDataStore = ProductDaoMem.getInstance();
         Product product = productDataStore.find(itemID);
-        product.setQuantity(itemQuantity);
         if (itemQuantity == 0) {
             removeItem(itemID);
         }
@@ -64,5 +63,6 @@ public class CartController extends HttpServlet {
             }
         }
         ProductController.cart.remove(remove);
+        subtotal = 0;
     }
 }
