@@ -20,9 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.log4j.PropertyConfigurator;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(CheckoutController.class);
     private ArrayList<Order> orders = new ArrayList<>();
     private int orderID = 1;
     public static Order order;
@@ -36,6 +40,7 @@ public class CheckoutController extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PropertyConfigurator.configure("log4j.properties");
         boolean allValid = true;
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
@@ -85,6 +90,7 @@ public class CheckoutController extends HttpServlet {
         if (allValid) {
             int zipC = Integer.parseInt(zipCode);
             orderIDGenerator(firstName, lastName, email, phoneNumber, country, city, address, zipC);
+            logger.info("Successful checkout.");
             response.sendRedirect("http://localhost:8888/payment");
         } else {
             context.setVariable("email", email);
