@@ -38,7 +38,6 @@ public class CartController extends HttpServlet {
         context.setVariable("subtotal", subtotal);
         context.setVariable("products", ProductController.cart);
         engine.process("product/cart.html", context, resp.getWriter());
-
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
