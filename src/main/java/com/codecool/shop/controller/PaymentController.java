@@ -1,14 +1,9 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.config.Initializer;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -18,14 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
-
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,6 +29,7 @@ public class PaymentController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PropertyConfigurator.configure("log4j.properties");
         String paymentMethod = request.getParameter("paymentMethod");
         if (paymentMethod != null) {
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
@@ -49,8 +41,10 @@ public class PaymentController extends HttpServlet {
             String method = request.getParameter("method");
             if (method.equals("creditCard")) {
                 checkCredit();
+                logger.info("Payment with credit card.");
                 response.sendRedirect("http://localhost:8888/validation");
             } else if (method.equals("payPal")) {
+                logger.info("Payment with PayPal.");
                 response.sendRedirect("http://localhost:8888/validation");
             }
         }
