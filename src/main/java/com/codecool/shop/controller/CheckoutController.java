@@ -1,15 +1,10 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.config.Initializer;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.model.Product;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,10 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.log4j.PropertyConfigurator;
+import java.util.ArrayList;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
@@ -95,6 +87,7 @@ public class CheckoutController extends HttpServlet {
         } else {
             context.setVariable("email", email);
             context.setVariable("country", country);
+            logger.warn("Unsuccessful checkout.");
             engine.process("product/checkout.html", context, response.getWriter());
         }
 

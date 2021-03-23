@@ -1,15 +1,9 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.config.Initializer;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Order;
-import com.codecool.shop.model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,10 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.*;
 
 @WebServlet(urlPatterns = {"/validation"})
 public class Validation extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(Validation.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,13 +29,16 @@ public class Validation extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //TODO: Make JSON with order from CheckoutController
+        logger.info("Validated order.");
         createJsonFile(CheckoutController.order);
         try {
             getOrderFromFile("shopping_order_" + CheckoutController.order.getId() + ".txt");
+            logger.info("Order successfully converted into JSON.");
         } catch (ClassNotFoundException e) {
+            logger.warn("Could not covert order to JSON (ClassNotFoundException).");
             e.printStackTrace();
         }
+        logger.info("An email was sent to the User about the Order.");
         CartController.subtotal = 0;
         ProductController.cart.clear();
         response.sendRedirect("http://localhost:8888/");
