@@ -34,13 +34,16 @@ public class CartController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int itemID = Integer.parseInt(request.getParameter("itemID"));
-        int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        Product product = productDataStore.find(itemID);
-        if (itemQuantity == 0) {
-            removeItem(itemID);
+        String quantity = request.getParameter("quantity");
+        if (!quantity.equals("")) {
+            int itemQuantity = Integer.parseInt(request.getParameter("quantity"));
+            ProductDao productDataStore = ProductDaoMem.getInstance();
+            Product product = productDataStore.find(itemID);
+            if (itemQuantity == 0) {
+                removeItem(itemID);
+            }
+            product.setQuantity(itemQuantity);
         }
-        product.setQuantity(itemQuantity);
         subtotal = 0;
         doGet(request, response);
     }
