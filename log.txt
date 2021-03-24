@@ -1,0 +1,10 @@
+2021-03-23 18:13:21 INFO  CheckoutController:85 - Successful checkout.
+2021-03-23 18:13:27 INFO  PaymentController:47 - Payment with PayPal.
+2021-03-23 18:13:28 INFO  Validation:32 - Validated order.
+2021-03-23 18:13:28 INFO  Validation:36 - Order successfully converted into JSON.
+2021-03-23 18:13:28 INFO  Validation:41 - An email was sent to the User about the Order.
+2021-03-23 18:18:32 INFO  CheckoutController:85 - Successful checkout.
+2021-03-23 18:18:42 INFO  PaymentController:47 - Payment with PayPal.
+2021-03-23 18:18:44 WARN  Validation:32 - Validated order.
+2021-03-23 18:18:44 INFO  Validation:36 - Order successfully converted into JSON.
+2021-03-23 18:18:44 INFO  Validation:41 - An email was sent to the User about the Order.
