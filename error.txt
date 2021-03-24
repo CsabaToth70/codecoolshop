@@ -1,1 +1,1 @@
-2021-03-23 19:50:08 WARN  CheckoutController:90 - Unsuccessful checkout.
+2021-03-23 18:18:44 WARN  Validation:32 - Validated order.
