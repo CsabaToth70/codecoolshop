@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.model.AdminLog;
 import com.codecool.shop.model.Order;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
@@ -13,8 +14,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
@@ -22,17 +27,27 @@ public class CheckoutController extends HttpServlet {
     private ArrayList<Order> orders = new ArrayList<>();
     private int orderID = 1;
     public static Order order;
+    public static ObjectOutputStream objectOutputStream;
+    public static String logName;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        engine.process("product/checkout.html", context, resp.getWriter());
+        PropertyConfigurator.configure("log4j.properties");
+        try {
+            setUpJSON();
+            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            engine.process("product/checkout.html", context, resp.getWriter());
+        } catch (IOException e) {
+            logger.warn("Problem connecting to checkout.html (IOException)");
+            AdminLog logMessage = new AdminLog(currentDate(), "WARN", "Problem connecting to checkout.html (IOException)");
+            objectOutputStream.writeObject(logMessage);
+        }
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PropertyConfigurator.configure("log4j.properties");
         boolean allValid = true;
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
@@ -83,11 +98,15 @@ public class CheckoutController extends HttpServlet {
             int zipC = Integer.parseInt(zipCode);
             orderIDGenerator(firstName, lastName, email, phoneNumber, country, city, address, zipC);
             logger.info("Successful checkout.");
+            AdminLog logMessage = new AdminLog(currentDate(), "INFO", "Successful checkout.");
+            objectOutputStream.writeObject(logMessage);
             response.sendRedirect("http://localhost:8888/payment");
         } else {
             context.setVariable("email", email);
             context.setVariable("country", country);
             logger.warn("Unsuccessful checkout.");
+            AdminLog logMessage = new AdminLog(currentDate(), "WARN", "Unsuccessful checkout.");
+            objectOutputStream.writeObject(logMessage);
             engine.process("product/checkout.html", context, response.getWriter());
         }
 
@@ -111,5 +130,25 @@ public class CheckoutController extends HttpServlet {
         CheckoutController.order = order;
         orders.add(order);
         orderID = orderID + 1;
+    }
+
+    public void setUpJSON() throws IOException {
+        try {
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String name = orderID + "-" + formatter.format(date) + ".txt";
+            logName = name;
+            FileOutputStream fileOutputStream = new FileOutputStream(name);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        } catch (IOException e) {
+            logger.warn("Unsuccessful admin log creation (IOException)");
+            e.printStackTrace();
+        }
+    }
+
+    public static String currentDate() {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        return formatter.format(date);
     }
 }

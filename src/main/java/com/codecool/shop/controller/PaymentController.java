@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.model.AdminLog;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +43,13 @@ public class PaymentController extends HttpServlet {
             if (method.equals("creditCard")) {
                 checkCredit();
                 logger.info("Payment with credit card.");
+                AdminLog logMessage = new AdminLog(CheckoutController.currentDate(), "INFO", "Payment with credit card.");
+                CheckoutController.objectOutputStream.writeObject(logMessage);
                 response.sendRedirect("http://localhost:8888/validation");
             } else if (method.equals("payPal")) {
                 logger.info("Payment with PayPal.");
+                AdminLog logMessage = new AdminLog(CheckoutController.currentDate(), "INFO", "Payment with PayPal");
+                CheckoutController.objectOutputStream.writeObject(logMessage);
                 response.sendRedirect("http://localhost:8888/validation");
             }
         }
