@@ -41,8 +41,8 @@ public class CartController extends HttpServlet {
             removeItem(itemID);
         }
         product.setQuantity(itemQuantity);
+        subtotal = 0;
         doGet(request, response);
-
     }
 
     public void removeItem (int itemID) {
