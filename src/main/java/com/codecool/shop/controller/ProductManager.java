@@ -8,33 +8,36 @@ import java.util.ArrayList;
 
 public class ProductManager {
 
-    int itemID;
+
     ProductDao productDataStore;
-    ArrayList<Product> cart;
 
 
-    public ProductManager() {
-    }
+//    public ProductManager() {
+//    }
 
-    public ProductManager(int useThisItemID, ProductDao useThisProductDataStore, ArrayList<Product> useThisCart) {
-        this.itemID = useThisItemID;
+    public ProductManager(ProductDao useThisProductDataStore) {
         this.productDataStore = useThisProductDataStore;
-        this.cart = useThisCart;
     }
 
-    public void addToCart(int itemID, ProductDao productDataStore, ArrayList<Product> cart) {
-        Product product = productDataStore.find(itemID);
-        if (cart.size() == 0) {
-            product.setQuantity(1);
-            cart.add(product);
-        } else {
-            boolean used = checkItems(itemID, cart);
-            if (!used) {
+    public void addToCart(int itemID, ArrayList<Product> cart) {
+        try{
+            Product product = this.productDataStore.find(itemID);
+            if (cart.size() == 0) {
                 product.setQuantity(1);
                 cart.add(product);
+            } else {
+                boolean used = checkItems(itemID, cart);
+                if (!used) {
+                    product.setQuantity(1);
+                    cart.add(product);
+                }
             }
+
+        } catch (Exception e){
+            throw new IndexOutOfBoundsException();
         }
     }
+
     public boolean checkItems(int itemID, ArrayList<Product> cart) {
         for (Product item : cart) {
             if (item.getId() == itemID) {

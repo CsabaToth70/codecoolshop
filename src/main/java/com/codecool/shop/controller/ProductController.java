@@ -52,8 +52,8 @@ public class ProductController extends HttpServlet {
 
         if (addToCart != null) {
             int itemID = Integer.parseInt(request.getParameter("addToCart"));
-            ProductManager productManager = new ProductManager();
-            productManager.addToCart(itemID, productDataStore, cart);
+            ProductManager productManager = new ProductManager(productDataStore);
+            productManager.addToCart(itemID, cart);
             if (supplierID != 0) {
                 context.setVariable("products", productDataStore.getBy(productSupplierDataStore.find(supplierID)));
             } else if (categoryID != 0) {
