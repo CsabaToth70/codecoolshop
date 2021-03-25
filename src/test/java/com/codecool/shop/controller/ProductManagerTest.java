@@ -64,7 +64,7 @@ class ProductManagerTest {
     }
 
     @Test
-    void test_addOneProductToCart_WhenIdIsNull() {
+    void test_addOneProductToCart_WhenIdIsZero_ThrowIndexOutOfBoundsException() {
         int TestItemID = 0;
         String requiredProductName = "Asus X515MA-BR228T Notebook";
         when(testProductDao.find(TestItemID)).thenReturn(testProduct_1);
