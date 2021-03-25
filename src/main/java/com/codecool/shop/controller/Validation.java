@@ -97,20 +97,14 @@ public class Validation extends HttpServlet {
     private void getMessagesFromFile(String filename) throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(filename);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        try
-        {
-            for (;;)
-            {
+        try {
+            for (;;) {
                 AdminLog order = (AdminLog) objectInputStream.readObject();
                 displayLog(order);
             }
-        }
-        catch (EOFException exc)
-        {
+        } catch (EOFException exc) {
             System.out.println("End of file reached");
-        }
-        catch (IOException exc)
-        {
+        } catch (IOException exc) {
             exc.printStackTrace();
         }
         objectInputStream.close();
