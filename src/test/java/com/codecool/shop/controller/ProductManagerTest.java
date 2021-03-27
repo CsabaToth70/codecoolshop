@@ -74,5 +74,15 @@ class ProductManagerTest {
 
         assertThrows(IndexOutOfBoundsException.class, () -> testCart.get(1).getName());
     }
+    @Test
+    void test_addOneProductToCart_WhenCartIsNull_ThrowNullPointerException() {
+        int TestItemID = 1;
+        testCart = null;
+        String requiredProductName = "Asus X515MA-BR228T Notebook";
+        when(testProductDao.find(TestItemID)).thenReturn(testProduct_1);
+        ProductManager testProductManager = new ProductManager(testProductDao);
+
+        assertThrows(NullPointerException.class, () -> testProductManager.addToCart(TestItemID, testCart));
+    }
 
 }

@@ -34,7 +34,7 @@ public class ProductManager {
             }
 
         } catch (Exception e){
-            throw new IndexOutOfBoundsException();
+            throw e;
         }
     }
 
