@@ -7,12 +7,12 @@ public class User {
     private UUID user_id = UUID.randomUUID();
     private String name;
     private String email;
-    private JPasswordField passwordField = new JPasswordField(10);
+    private String password;
 
-    public User(String name, String email, JPasswordField passwordField) {
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
-        this.passwordField = passwordField;
+        this.password = password;
     }
 
     public String getName() {
@@ -31,12 +31,12 @@ public class User {
         this.email = email;
     }
 
-    public JPasswordField getPasswordField() {
-        return passwordField;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordField(JPasswordField passwordField) {
-        this.passwordField = passwordField;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UUID getUser_id() {

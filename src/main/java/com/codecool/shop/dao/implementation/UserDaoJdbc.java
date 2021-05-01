@@ -8,6 +8,18 @@ import java.util.Set;
 import java.util.UUID;
 
 public class UserDaoJdbc implements UserDao {
+    private static UserDaoJdbc instance = null;
+
+    public UserDaoJdbc() {
+    }
+
+    public static UserDaoJdbc getInstance(){
+        if (instance == null) {
+            instance = new UserDaoJdbc();
+        }
+        return instance;
+    }
+
     @Override
     public void save(User user) {
 

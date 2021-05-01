@@ -31,9 +31,10 @@
 <body>
 
 <div class="headerLine"; id="myHeader">
+    <br>
     <h1 id="headText">R E G I S T R A T I O N</h1>
 </div>
-
+<br>
 <div class="container">
     <div class="card">
         <h2>Complete your personal data</h2>
@@ -45,7 +46,7 @@
             <input type="email" id="email" name="email" th:value="${email}" required><br><br>
 
             <label for="password">Password (maximum 10 character)</label>
-            <input type="tel" id="password" name="password" th:value="${password}" required><br><br>
+            <input type="text" id="password" name="password" th:value="${password}" required><br><br>
 
             <input type="submit" value="Submit">
         </form>
