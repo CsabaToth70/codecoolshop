@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.util.UUID;
 
 public class User {
-    private UUID user_id = UUID.randomUUID();
     private String name;
     private String email;
     private String password;
@@ -39,7 +38,4 @@ public class User {
         this.password = password;
     }
 
-    public UUID getUser_id() {
-        return user_id;
-    }
 }
