@@ -4,6 +4,7 @@ import com.codecool.shop.config.Initializer;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ProductCategoryDao;
 //import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShopDatabaseManager;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
@@ -21,12 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
 @WebServlet(urlPatterns = {"/registration"})
 public class RegistrationController extends HttpServlet {
     private final Set<User> users = new HashSet<User>();
+
 
 
     @Override
@@ -55,15 +58,20 @@ public class RegistrationController extends HttpServlet {
 
             User user = new User(name, email, password);
 
+            ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
+
+            shopDatabaseManager.saveUser(user);
+
             System.out.println(name);
             System.out.println(email);
             System.out.println(password);
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
+
 
 }

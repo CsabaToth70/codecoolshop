@@ -1,63 +1,68 @@
 DROP TABLE IF EXISTS registration;
-CREATE TABLE registration (
-                      id serial NOT NULL PRIMARY KEY,
-                      name text,
-                      email text,
-                      password text
+CREATE TABLE registration
+(
+    id       serial NOT NULL PRIMARY KEY,
+    name     text,
+    email    text,
+    password text
 );
 
 
 DROP TABLE IF EXISTS items;
-CREATE TABLE items (
-    id serial NOT NULL PRIMARY KEY,
-    name text,
-    price float,
-    category text,
+CREATE TABLE items
+(
+    id            serial NOT NULL PRIMARY KEY,
+    name          text,
+    price         float,
+    category      text,
     supplier_name text,
-    picture text,
-    description text
+    picture       text,
+    description   text
 );
 
 
 DROP TABLE IF EXISTS customers;
-CREATE TABLE customers (
-                        id serial NOT NULL PRIMARY KEY,
-                        user_id integer NOT NULL,
-                        name text,
-                        email citext UNIQUE,
-                        phone_number text,
-                        billing_country text,
-                        billing_city text,
-                        billing_zipcode text,
-                        billing_address text,
-                        payment_method text,
-                        card_number text,
-                        card_holder text,
-                        expiring_date text,
-                        code_credit_card text,
-                        username_paypal text,
+CREATE TABLE customers
+(
+    id               serial  NOT NULL PRIMARY KEY,
+    user_id          integer NOT NULL,
+    name             text,
+    email            citext UNIQUE,
+    phone_number     text,
+    billing_country  text,
+    billing_city     text,
+    billing_zipcode  text,
+    billing_address  text,
+    payment_method   text,
+    card_number      text,
+    card_holder      text,
+    expiring_date    text,
+    code_credit_card text,
+    username_paypal  text,
 );
 
 DROP TABLE IF EXISTS orders;
-CREATE TABLE orders (
-                        id serial NOT NULL PRIMARY KEY,
-                        customer_id integer NOT NULL,
-                        item_id integer NOT NULL,
-                        quantity integer,
-                        shipping_id integer NOT NULL,
-                        ordering_date timestamp without time zone,
-                        payment_method text,
-                        is_payed boolean DEFAULT False
+CREATE TABLE orders
+(
+    id             serial  NOT NULL PRIMARY KEY,
+    customer_id    integer NOT NULL,
+    item_id        integer NOT NULL,
+    quantity       integer,
+    shipping_id    integer NOT NULL,
+    ordering_date  timestamp without time zone,
+    payment_method text,
+    is_payed       boolean DEFAULT False
 );
 
 DROP TABLE IF EXISTS shippings;
-CREATE TABLE shippings (
-                        id serial NOT NULL PRIMARY KEY,
-                        order_id integer NOT NULL,
-                        shipping_country text,
-                        shipping_city text,
-                        shipping_zipcode text,
-                        shipping_address text
+CREATE TABLE shippings
+(
+    id               serial  NOT NULL PRIMARY KEY,
+    order_id         integer NOT NULL,
+    shipping_country text,
+    shipping_city    text,
+    shipping_zipcode text,
+    shipping_address text
 
 );
 

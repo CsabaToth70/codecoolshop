@@ -2,6 +2,7 @@ package com.codecool.shop.config;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShopDatabaseManager;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
@@ -13,6 +14,7 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -20,12 +22,15 @@ import java.util.Map;
 public class Initializer implements ServletContextListener {
     public static ArrayList<ProductCategory> categoryList = new ArrayList<>();
     public static ArrayList<Supplier> supplierList = new ArrayList<>();
+    public static ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+
+        runDatabase();
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
@@ -78,4 +83,13 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("MobileStudio Pro 13", 2600, "USD", "Your Wacom MobileStudio Pro leads the way, with powerful new features to help you stay in the zone.", penComputer, wacom));
 
     }
+
+    private void runDatabase() {
+        try {
+            shopDatabaseManager.setup();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }
