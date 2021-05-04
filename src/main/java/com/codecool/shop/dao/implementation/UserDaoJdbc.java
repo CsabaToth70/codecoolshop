@@ -17,24 +17,15 @@ public class UserDaoJdbc implements UserDao {
         this.dataSource = dataSource;
     }
 
-//    public UserDaoJdbc() {
-//    }
-
-//    public static UserDaoJdbc getInstance(){
-//        if (instance == null) {
-//            instance = new UserDaoJdbc();
-//        }
-//        return instance;
-//    }
 
     @Override
     public void save(User user) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO registration (name, email, password) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO users (name, email, token_for_authentication) VALUES (?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
+            statement.setString(3, user.getToken_for_authentication());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();

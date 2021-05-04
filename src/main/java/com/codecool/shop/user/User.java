@@ -1,17 +1,14 @@
 package com.codecool.shop.user;
 
-import javax.swing.*;
-import java.util.UUID;
-
 public class User {
     private String name;
     private String email;
-    private String password;
+    private String token_for_authentication;
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String token_for_authentication) {
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.token_for_authentication = token_for_authentication;
     }
 
     public String getName() {
@@ -30,12 +27,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getToken_for_authentication() {
+        return token_for_authentication;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setToken_for_authentication(String token_for_authentication) {
+        this.token_for_authentication = token_for_authentication;
     }
-
 }

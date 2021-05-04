@@ -11,6 +11,7 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 //import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.model.AdminLog;
 import com.codecool.shop.user.User;
+import com.codecool.shop.util.PasswordAuthentication;
 import com.sun.source.doctree.SeeTree;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -46,17 +47,16 @@ public class RegistrationController extends HttpServlet {
         try {
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
             WebContext context = new WebContext(request, response, request.getServletContext());
+            PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
             String name = request.getParameter("name");
             String email = request.getParameter("email");
-//            JPasswordField passwordField = new JPasswordField(10);
 
             String password = request.getParameter("password");
+            String token = passwordAuthentication.hash(password);
 
-//            passwordField.setActionCommand(OK);
-//            passwordField.addActionListener(password);
             response.sendRedirect("http://localhost:8888/");
 
-            User user = new User(name, email, password);
+            User user = new User(name, email, token);
 
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
 

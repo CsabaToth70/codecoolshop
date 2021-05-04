@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS registration;
-CREATE TABLE registration
+DROP TABLE IF EXISTS users;
+CREATE TABLE users
 (
     id       serial NOT NULL PRIMARY KEY,
     name     text,
     email    text,
-    password text
+    token_for_authentication text
 );
 
 
@@ -67,7 +67,7 @@ CREATE TABLE shippings
 );
 
 ALTER TABLE ONLY customers
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES registration(id);
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
 ALTER TABLE ONLY orders
     ADD CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customers(id);
