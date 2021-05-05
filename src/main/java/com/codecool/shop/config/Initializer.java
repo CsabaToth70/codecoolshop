@@ -17,12 +17,15 @@ import javax.servlet.annotation.WebListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 @WebListener
 public class Initializer implements ServletContextListener {
     public static ArrayList<ProductCategory> categoryList = new ArrayList<>();
     public static ArrayList<Supplier> supplierList = new ArrayList<>();
     public static ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
+    private static String shopPassword;
+    private static String testUserEmail;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -31,6 +34,9 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         runDatabase();
+
+        shopPassword = askTerminalInputForTesting("Enter password of the shop's email box");
+        testUserEmail = askTerminalInputForTesting("Enter an existing email address for testing registration mailing");
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
@@ -90,6 +96,20 @@ public class Initializer implements ServletContextListener {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static String getShopPassword() {
+        return shopPassword;
+    }
+
+    public static String getTestUserEmail() {
+        return testUserEmail;
+    }
+
+    private static String askTerminalInputForTesting(String displayQuestion){
+        Scanner terminalInput = new Scanner(System.in);
+        System.out.println("\n" + displayQuestion + ": ");
+        return terminalInput.nextLine();
     }
 
 }
