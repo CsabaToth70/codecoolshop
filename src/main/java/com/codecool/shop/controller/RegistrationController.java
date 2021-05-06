@@ -5,6 +5,8 @@ import com.codecool.shop.config.TemplateEngineUtil;
 //import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShopDatabaseManager;
 //import com.codecool.shop.dao.implementation.UserDaoJdbc;
+import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.user.User;
 import com.codecool.shop.util.PasswordAuthentication;
 import com.codecool.shop.util.JavaMailUtil;
@@ -16,12 +18,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 @WebServlet(urlPatterns = {"/registration"})
 public class RegistrationController extends HttpServlet {
+    private static final String SYSTEM_ADMIN_EMAIL_1 = "lesitocsa@gmail.com";
+    private static final String SYSTEM_ADMIN_EMAIL_2 = "polli.burjan@gmail.com";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,6 +40,7 @@ public class RegistrationController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            User user;
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
             WebContext context = new WebContext(request, response, request.getServletContext());
             PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
@@ -43,12 +49,19 @@ public class RegistrationController extends HttpServlet {
             String password = request.getParameter("password");
             String token = passwordAuthentication.hash(password);
             response.sendRedirect("http://localhost:8888/");
-
-            User user = new User(name, email, token);
+            if (isSystemAdmin(email) && !isAlreadyRegistered(email)) {
+                user = new User(name, email, token, true);
+            } else {
+                if (email.equals("")) {
+                    response.sendRedirect("http://localhost:8888/registration");
+                } else if (isAlreadyRegistered(email)) {
+                    response.sendRedirect("http://localhost:8888/");
+                }
+                user = new User(name, email, token, false);
+            }
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
             shopDatabaseManager.saveUser(user);
-            String userMail = Initializer.getTestUserEmail(); // ToDo: read user email address from SQL table!
-            JavaMailUtil.SendEmail(userMail, Initializer.getShopPassword());
+            JavaMailUtil.SendEmail(email, Initializer.getShopPassword());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,6 +69,17 @@ public class RegistrationController extends HttpServlet {
 
     }
 
+    private boolean isAlreadyRegistered(String email) {
+        ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
+        return shopDatabaseManager.getUser(email) == null;
+    }
+
+    private boolean isSystemAdmin(String email) {
+        if (SYSTEM_ADMIN_EMAIL_1.equals(email) || SYSTEM_ADMIN_EMAIL_2.equals(email)) {
+            return true;
+        }
+        return false;
+    }
 
 
 }

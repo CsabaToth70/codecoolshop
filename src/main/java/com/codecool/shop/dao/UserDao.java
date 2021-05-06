@@ -10,7 +10,7 @@ public interface UserDao {
     void save(User user);
     Set<User> getAll();
     void modifyEmail(User user);
-    Optional<User> get(String email);
+    User get(String email);
     void update(User user, String[] params);
     void delete(User user);
 

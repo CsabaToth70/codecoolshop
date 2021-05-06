@@ -43,9 +43,29 @@ public class UserDaoJdbc implements UserDao {
 
     }
 
+    // SELECT id, name, email, token_for_authentication, sysadmin FROM users WHERE email = "lesitocsa@tkwya.com";
+
     @Override
-    public Optional<User> get(String email) {
-        return Optional.empty();
+    public User get(String email) {
+        try(Connection conn = dataSource.getConnection()){
+            String sql = "SELECT id, name, email, token_for_authentication, sysadmin FROM users WHERE email = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if(!rs.next()){
+                return null;
+            }
+            int userId = rs.getInt(1);
+            String name = rs.getString(2);
+            String token_for_authentication = rs.getString(4);
+            boolean sysadmin = rs.getBoolean(5);
+            User user = new User(name, email, token_for_authentication, sysadmin);
+            user.setId(userId);
+            return user;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     @Override

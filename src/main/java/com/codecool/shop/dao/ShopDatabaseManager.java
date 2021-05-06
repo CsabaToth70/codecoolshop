@@ -26,6 +26,11 @@ public class ShopDatabaseManager {
         userDao.save(user);
     }
 
+    public User getUser(String email){
+        User user = userDao.get(email);
+        return user;
+    }
+
     private DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         String dbName = "codecoolshop";
