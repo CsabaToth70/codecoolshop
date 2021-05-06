@@ -37,7 +37,10 @@
         <p><a class="cart" href="/cart"> <img style="width: 50px; margin-right: 45px; vertical-align: middle;
     float: right" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/cart.png'" alt="" /></a></p>
     <form action="/registration">
-        <button style="height: fit-content; border-radius: 8px; margin: 4px 6px">Sign up</button>
+        <button style="height: fit-content; width: 90px; border-radius: 8px; margin: 4px 6px">Sign up</button>
+    </form>
+    <form action="/login">
+        <button style="height: fit-content; width: 90px; border-radius: 8px; margin: 4px 6px">Log in</button>
     </form>
 </div>
 
@@ -86,7 +89,9 @@
     </div>
 
 </div>
-
+<form action="/admin" style="margin-right: 45px;">
+    <button style="height: fit-content; color: gray; background-color: white; border: white; border-radius: 8px; margin: 4px 6px"><u>Admin</u></button>
+</form>
 <div th:replace="footer.html :: copy"></div>
 
 <script>

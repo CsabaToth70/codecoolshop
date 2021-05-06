@@ -7,7 +7,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 public class UserDaoJdbc implements UserDao {
     private static UserDaoJdbc instance = null;
@@ -45,7 +44,7 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
-    public Optional<User> get(UUID id) {
+    public Optional<User> get(String email) {
         return Optional.empty();
     }
 

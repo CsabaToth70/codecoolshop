@@ -4,7 +4,8 @@ CREATE TABLE users
     id       serial NOT NULL PRIMARY KEY,
     name     text,
     email    text,
-    token_for_authentication text
+    token_for_authentication text,
+    sysadmin boolean DEFAULT false
 );
 
 
