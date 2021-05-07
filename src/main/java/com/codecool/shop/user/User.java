@@ -34,6 +34,10 @@ public class User {
         this.id = id;
     }
 
+    public boolean isSysadmin() {
+        return sysadmin;
+    }
+
     public String getToken_for_authentication() {
         return token_for_authentication;
     }

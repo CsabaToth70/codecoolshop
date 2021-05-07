@@ -5,7 +5,7 @@ CREATE TABLE users
     name     text,
     email    text,
     token_for_authentication text,
-    sysadmin boolean DEFAULT false
+    sysadmin boolean
 );
 
 

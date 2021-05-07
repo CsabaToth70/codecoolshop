@@ -47,9 +47,6 @@ public class LoginController extends HttpServlet {
 
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
 
-            System.out.println("token based on given email:" + token);
-            System.out.println("read token from sql table: " + shopDatabaseManager.getUser(email).getToken_for_authentication());
-
             if (passwordAuthentication.authenticate(password, shopDatabaseManager.getUser(email).getToken_for_authentication())) {
                 String username = shopDatabaseManager.getUser(email).getName();
 
