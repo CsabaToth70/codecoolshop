@@ -46,25 +46,21 @@ public class LoginController extends HttpServlet {
             String token = passwordAuthentication.hash(password);
 
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
+            HttpSession session = request.getSession();
+            if (shopDatabaseManager.getUser(email) != null) {
+                if (passwordAuthentication.authenticate(password, shopDatabaseManager.getUser(email).getToken_for_authentication())) {
+                    String username = shopDatabaseManager.getUser(email).getName();
 
-            if (passwordAuthentication.authenticate(password, shopDatabaseManager.getUser(email).getToken_for_authentication())) {
-                String username = shopDatabaseManager.getUser(email).getName();
-
-                // todo add user - email - to the session!
-                HttpSession session = request.getSession();
-
-
-                // These lines just a practice to display session status information
-//                PrintWriter writer = response.getWriter();
-//                writer.println("Session ID: " + session.getId());
-//                writer.println("Creation Time: " + new Date(session.getCreationTime()));
-//                writer. println("Last Accessed Time: " + new Date(session.getLastAccessedTime()));
-
-                session.setAttribute("username", username);
-                session.setAttribute("email", email);
-
-                response.sendRedirect("http://localhost:8888");
+                    session.setAttribute("username", username);
+                    session.setAttribute("email", email);
+                    session.removeAttribute("login_message");
+                    response.sendRedirect("http://localhost:8888");
+                } else {
+                    session.setAttribute("login_message", "Wrong email or password!");
+                    response.sendRedirect("http://localhost:8888/login");
+                }
             } else {
+                session.setAttribute("login_message", "Wrong email or password!");
                 response.sendRedirect("http://localhost:8888/login");
             }
 

@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html lang="hu" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:background-image="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+<!--    <meta charset="utf-8" />-->
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -50,8 +51,12 @@
         </form>
     </span>
 </div>
-<span th:text="${session.username}" style="margin-right: 45px; float: right; color: darkblue;"><b></b></span>
-<span th:if="${session.username} != null" style="float: right; color: darkblue;">Logged in: </span>
+
+<div style="font-family: Times New Roman, Times, serif;">
+    <span th:text="${session.username}" style="margin-right: 45px; float: right; color: darkblue;"><b></b></span>
+    <span th:if="${session.username} != null" style="float: right; color: darkblue;">Logged in:&nbsp;</span>
+</div>
+
 
 <div class="container">
     <div class="card">

@@ -13,3 +13,5 @@
 2021-03-24 17:47:55 INFO  Validation:32 - Validated order.
 2021-03-24 17:47:56 INFO  Validation:36 - Order successfully converted into JSON.
 2021-03-24 17:47:56 INFO  Validation:41 - An email was sent to the User about the Order.
+2021-05-07 16:23:11 INFO  CheckoutController:70 - Successful checkout.
+2021-05-07 16:23:32 INFO  PaymentController:58 - Payment with PayPal.
