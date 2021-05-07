@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--    <meta charset="utf-8" />-->
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+    <meta charset="utf-8" />
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">-->
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -51,6 +51,9 @@
             <input type="password" id="password" name="password"  required><br><br>
             <br>
             <input type="submit" value="Submit">
+            <br>
+            <br>
+            <p th:if="${session.login_message} != null"><span th:text="${session.login_message}" style="color: red;"></span></p>
         </form>
     </div>
 

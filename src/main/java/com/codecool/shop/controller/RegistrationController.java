@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/registration"})
@@ -43,15 +44,20 @@ public class RegistrationController extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String token = passwordAuthentication.hash(password);
+            HttpSession session = request.getSession();
             response.sendRedirect("http://localhost:8888/");
             if (isSystemAdmin(email) && !isAlreadyRegistered(email) && !sysadminPositionsFilledIn()) {
+                session.removeAttribute("login_message");
                 user = new User(name, email, token, true);
             } else {
                 if (email.equals("")) {
+                    session.setAttribute("login_message", "Incomplete email or password!");
                     response.sendRedirect("http://localhost:8888/registration");
                 } else if (isAlreadyRegistered(email)) {
+                    session.setAttribute("login_message", "We already have a registered user with the email address you provided");
                     response.sendRedirect("http://localhost:8888/");
                 }
+                session.removeAttribute("login_message");
                 user = new User(name, email, token, false);
             }
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
