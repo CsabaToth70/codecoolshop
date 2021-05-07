@@ -39,10 +39,19 @@
     <form action="/registration">
         <button style="height: fit-content; width: 90px; border-radius: 8px; margin: 4px 6px">Sign up</button>
     </form>
-    <form action="/login">
-        <button style="height: fit-content; width: 90px; border-radius: 8px; margin: 4px 6px">Log in</button>
-    </form>
+    <span th:if="${session.username} == null">
+        <form action="/login">
+            <button style="height: fit-content; width: 90px; border-radius: 8px; margin: 4px 6px">Log in</button>
+        </form>
+    </span>
+    <span th:if="${session.username} != null">
+        <form action="/logout">
+            <button style="height: fit-content; width: 90px; border-radius: 8px; margin: 4px 6px">Log out</button>
+        </form>
+    </span>
 </div>
+<span th:text="${session.username}" style="margin-right: 45px; float: right; color: darkblue;"><b></b></span>
+<span th:if="${session.username} != null" style="float: right; color: darkblue;">Logged in: </span>
 
 <div class="container">
     <div class="card">
@@ -62,7 +71,6 @@
             <input type="hidden" name="dropdown" value="supplier">
             <input type = "submit" value = "Submit" />
         </form>
-
     </div>
 
     <div id="products" class="row">
@@ -89,9 +97,10 @@
     </div>
 
 </div>
-<form action="/admin" style="margin-right: 45px;">
-    <button style="height: fit-content; color: gray; background-color: white; border: white; border-radius: 8px; margin: 4px 6px"><u>Admin</u></button>
-</form>
+<a href="http://localhost:8888/admin">Admin</a>
+<!--<form action="/admin" style="margin-right: 45px;">-->
+<!--    <button style="height: fit-content; color: gray; background-color: white; border: white; border-radius: 8px; margin: 4px 6px"><u>Admin</u></button>-->
+<!--</form>-->
 <div th:replace="footer.html :: copy"></div>
 
 <script>
