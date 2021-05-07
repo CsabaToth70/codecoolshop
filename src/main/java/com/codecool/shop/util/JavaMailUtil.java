@@ -1,5 +1,7 @@
 package com.codecool.shop.util;
 
+import com.codecool.shop.config.Initializer;
+
 import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -15,7 +17,7 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMailUtil {
 
-    public static void SendEmail(String targetEmail, String password)
+    public static void SendEmail(String targetEmail, String shopEmail, String shopEmailPassword)
     {
 
         try{
@@ -33,15 +35,14 @@ public class JavaMailUtil {
             Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("codecoolshopmasters@gmail.com", password);
+                    return new PasswordAuthentication(shopEmail, shopEmailPassword);
                 }
             });
-
             mailSession.setDebug(true); // Enable the debug mode
 
             Message message = new MimeMessage( mailSession );
 
-            message.setFrom( new InternetAddress( "codecoolshopmasters@gmail.com" ) );
+            message.setFrom( new InternetAddress(shopEmail) );
             message.setRecipients( Message.RecipientType.TO,InternetAddress.parse(targetEmail) );
             message.setSentDate( new Date());
             message.setSubject( "Registration confirmation" );

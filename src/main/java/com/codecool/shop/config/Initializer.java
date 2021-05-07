@@ -16,7 +16,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 @WebListener
@@ -24,17 +23,15 @@ public class Initializer implements ServletContextListener {
     public static ArrayList<ProductCategory> categoryList = new ArrayList<>();
     public static ArrayList<Supplier> supplierList = new ArrayList<>();
     public static ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
-    private static String shopPassword;
-
+    private static String shopEmailPassword;
+    private static String shopEmail;
+    //            codecoolshopmasters@gmail.com
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-
         runDatabase();
-
-        shopPassword = askTerminalInputForTesting("Enter password of the shop's email box");
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
@@ -96,15 +93,19 @@ public class Initializer implements ServletContextListener {
         }
     }
 
-    public static String getShopPassword() {
-        return shopPassword;
+    public static String getShopEmail() {
+        return shopEmail;
     }
 
-
-    private static String askTerminalInputForTesting(String displayQuestion){
-        Scanner terminalInput = new Scanner(System.in);
-        System.out.println("\n" + displayQuestion + ": ");
-        return terminalInput.nextLine();
+    public static void setShopEmail(String shopEmail) {
+        Initializer.shopEmail = shopEmail;
     }
 
+    public static String getShopEmailPassword() {
+        return shopEmailPassword;
+    }
+
+    public static void setShopEmailPassword(String shopEmailPassword) {
+        Initializer.shopEmailPassword = shopEmailPassword;
+    }
 }
