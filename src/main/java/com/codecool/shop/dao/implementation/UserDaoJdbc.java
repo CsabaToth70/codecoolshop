@@ -43,7 +43,6 @@ public class UserDaoJdbc implements UserDao {
 
     }
 
-    // SELECT id, name, email, token_for_authentication, sysadmin FROM users WHERE email = "lesitocsa@tkwya.com";
 
     @Override
     public User get(String email) {

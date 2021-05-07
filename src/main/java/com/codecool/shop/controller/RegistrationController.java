@@ -5,8 +5,6 @@ import com.codecool.shop.config.TemplateEngineUtil;
 //import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShopDatabaseManager;
 //import com.codecool.shop.dao.implementation.UserDaoJdbc;
-import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.user.User;
 import com.codecool.shop.util.PasswordAuthentication;
 import com.codecool.shop.util.JavaMailUtil;
@@ -18,10 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 @WebServlet(urlPatterns = {"/registration"})
 public class RegistrationController extends HttpServlet {
@@ -49,7 +44,7 @@ public class RegistrationController extends HttpServlet {
             String password = request.getParameter("password");
             String token = passwordAuthentication.hash(password);
             response.sendRedirect("http://localhost:8888/");
-            if (isSystemAdmin(email) && !isAlreadyRegistered(email)) {
+            if (isSystemAdmin(email) && !isAlreadyRegistered(email) && !sysadminPositionsFilledIn()) {
                 user = new User(name, email, token, true);
             } else {
                 if (email.equals("")) {
@@ -69,9 +64,20 @@ public class RegistrationController extends HttpServlet {
 
     }
 
+    private boolean sysadminPositionsFilledIn() {
+        boolean sysadminPositionsFilledIn = false;
+        ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
+        sysadminPositionsFilledIn = shopDatabaseManager.getUser(SYSTEM_ADMIN_EMAIL_1) != null;
+        return sysadminPositionsFilledIn && shopDatabaseManager.getUser(SYSTEM_ADMIN_EMAIL_2) != null;
+
+    }
+
     private boolean isAlreadyRegistered(String email) {
         ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
-        return shopDatabaseManager.getUser(email) == null;
+        if (shopDatabaseManager.getUser(email) != null) {
+            return shopDatabaseManager.getUser(email).getEmail().equals(email);
+        }
+        return false;
     }
 
     private boolean isSystemAdmin(String email) {

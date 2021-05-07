@@ -16,7 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,16 +44,32 @@ public class LoginController extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String token = passwordAuthentication.hash(password);
-            // todo compare the token and the token for authentication within database!
-
-
-
-            response.sendRedirect("http://localhost:8888/");
-
 
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
-//            shopDatabaseManager.saveUser(user);
 
+            System.out.println("token based on given email:" + token);
+            System.out.println("read token from sql table: " + shopDatabaseManager.getUser(email).getToken_for_authentication());
+
+            if (passwordAuthentication.authenticate(password, shopDatabaseManager.getUser(email).getToken_for_authentication())) {
+                String username = shopDatabaseManager.getUser(email).getName();
+
+                // todo add user - email - to the session!
+                HttpSession session = request.getSession();
+
+
+                // These lines just a practice to display session status information
+//                PrintWriter writer = response.getWriter();
+//                writer.println("Session ID: " + session.getId());
+//                writer.println("Creation Time: " + new Date(session.getCreationTime()));
+//                writer. println("Last Accessed Time: " + new Date(session.getLastAccessedTime()));
+
+                session.setAttribute("username", username);
+                session.setAttribute("email", email);
+
+                response.sendRedirect("http://localhost:8888");
+            } else {
+                response.sendRedirect("http://localhost:8888/login");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -25,7 +25,6 @@ public class Initializer implements ServletContextListener {
     public static ArrayList<Supplier> supplierList = new ArrayList<>();
     public static ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
     private static String shopPassword;
-    private static String testUserEmail;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -36,7 +35,6 @@ public class Initializer implements ServletContextListener {
         runDatabase();
 
         shopPassword = askTerminalInputForTesting("Enter password of the shop's email box");
-        testUserEmail = askTerminalInputForTesting("Enter an existing email address for testing registration mailing");
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
@@ -102,9 +100,6 @@ public class Initializer implements ServletContextListener {
         return shopPassword;
     }
 
-    public static String getTestUserEmail() {
-        return testUserEmail;
-    }
 
     private static String askTerminalInputForTesting(String displayQuestion){
         Scanner terminalInput = new Scanner(System.in);
