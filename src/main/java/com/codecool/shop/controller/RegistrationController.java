@@ -57,8 +57,9 @@ public class RegistrationController extends HttpServlet {
             }
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
             shopDatabaseManager.saveUser(user);
-            JavaMailUtil.SendEmail(email, Initializer.getShopEmail(), Initializer.getShopEmailPassword());
-
+            if (!user.isSysadmin()) {
+                JavaMailUtil.SendEmail(email, Initializer.getShopEmail(), Initializer.getShopEmailPassword());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
