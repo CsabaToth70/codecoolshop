@@ -35,24 +35,13 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
-    public Set<User> getAll() {
-        return null;
-    }
-
-    @Override
-    public void modifyEmail(User user) {
-
-    }
-
-
-    @Override
     public User get(String email) {
-        try(Connection conn = dataSource.getConnection()){
+        try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT id, name, email, token_for_authentication, sysadmin FROM users WHERE email = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
-            if(!rs.next()){
+            if (!rs.next()) {
                 return null;
             }
             int userId = rs.getInt(1);
@@ -68,13 +57,4 @@ public class UserDaoJdbc implements UserDao {
         return null;
     }
 
-    @Override
-    public void update(User user, String[] params) {
-
-    }
-
-    @Override
-    public void delete(User user) {
-
-    }
 }

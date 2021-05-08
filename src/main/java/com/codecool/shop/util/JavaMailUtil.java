@@ -17,10 +17,9 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMailUtil {
 
-    public static void SendEmail(String targetEmail, String shopEmail, String shopEmailPassword)
-    {
+    public static void SendEmail(String targetEmail, String shopEmail, String shopEmailPassword) {
 
-        try{
+        try {
 
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com");
@@ -40,22 +39,22 @@ public class JavaMailUtil {
             });
             mailSession.setDebug(true); // Enable the debug mode
 
-            Message message = new MimeMessage( mailSession );
+            Message message = new MimeMessage(mailSession);
 
-            message.setFrom( new InternetAddress(shopEmail) );
-            message.setRecipients( Message.RecipientType.TO,InternetAddress.parse(targetEmail) );
-            message.setSentDate( new Date());
-            message.setSubject( "Registration confirmation" );
+            message.setFrom(new InternetAddress(shopEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(targetEmail));
+            message.setSentDate(new Date());
+            message.setSubject("Registration confirmation");
 
-            message.setText( "" );
+            message.setText("");
             String htmlCode = "<h1> CONFIRMATION </h1> <h2> Your registration was successful at CodeCool Shop. <br>Enjoy " +
                     "the shopping!\n</h2><h3>Team of ShopMasters </h3>";
             message.setContent(htmlCode, "text/html");
 
-            Transport.send( message );
+            Transport.send(message);
 
         } catch (Exception ex) {
-        Logger.getLogger(JavaMailUtil.class.getName()).log(Level.SEVERE, null, ex);
-    }
+            Logger.getLogger(JavaMailUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

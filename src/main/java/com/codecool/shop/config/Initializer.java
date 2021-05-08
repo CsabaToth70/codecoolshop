@@ -16,7 +16,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -25,7 +24,9 @@ public class Initializer implements ServletContextListener {
     public static ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
     private static String shopEmailPassword;
     private static String shopEmail;
-    //            codecoolshopmasters@gmail.com
+
+    //  created temporary email box for testing: codecoolshopmasters@gmail.com
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ProductDao productDataStore = ProductDaoMem.getInstance();

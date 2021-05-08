@@ -24,7 +24,7 @@ public class RemoveItem extends HttpServlet {
         resp.sendRedirect("http://localhost:8888/cart");
     }
 
-    public void removeItem (int itemID) {
+    public void removeItem(int itemID) {
         int remove = 0;
         for (Product item : ProductController.cart) {
             if (item.getId() == itemID) {

@@ -71,6 +71,7 @@ public class Validation extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     private void createJsonFile(Order order) throws IOException {
         String filename = "shopping_order_" + order.getId() + ".txt";
         FileOutputStream fileOutputStream = new FileOutputStream(filename);
@@ -79,14 +80,16 @@ public class Validation extends HttpServlet {
         objectOutputStream.flush();
         objectOutputStream.close();
     }
-        private void getOrderFromFile(String filename) throws IOException, ClassNotFoundException {
+
+    private void getOrderFromFile(String filename) throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(filename);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         Order order = (Order) objectInputStream.readObject();
         objectInputStream.close();
         displayOrder(order);
     }
-    private void displayOrder(Order order){
+
+    private void displayOrder(Order order) {
         System.out.println("\nOrder's data:");
         System.out.println("Name: " + order.getFirstName() + " " + order.getLastName());
         System.out.println("E-mail: " + order.getEmail());
@@ -98,7 +101,7 @@ public class Validation extends HttpServlet {
         FileInputStream fileInputStream = new FileInputStream(filename);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         try {
-            for (;;) {
+            for (; ; ) {
                 AdminLog order = (AdminLog) objectInputStream.readObject();
                 displayLog(order);
             }
@@ -110,7 +113,7 @@ public class Validation extends HttpServlet {
         objectInputStream.close();
     }
 
-    private void displayLog(AdminLog order){
+    private void displayLog(AdminLog order) {
         System.out.println("\nLog details:");
         System.out.println("Date: " + order.getDate());
         System.out.println("Level: " + order.getLogLevel());

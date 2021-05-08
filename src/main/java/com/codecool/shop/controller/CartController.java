@@ -48,7 +48,7 @@ public class CartController extends HttpServlet {
         doGet(request, response);
     }
 
-    public void removeItem (int itemID) {
+    public void removeItem(int itemID) {
         int remove = 0;
         for (Product item : ProductController.cart) {
             if (item.getId() == itemID) {

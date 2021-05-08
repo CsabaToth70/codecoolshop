@@ -2,9 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.Initializer;
 import com.codecool.shop.config.TemplateEngineUtil;
-//import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShopDatabaseManager;
-//import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.user.User;
 import com.codecool.shop.util.PasswordAuthentication;
 import com.codecool.shop.util.JavaMailUtil;
@@ -26,7 +24,6 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        UserDao userDataStore = UserDaoJdbc.getInstance();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         engine.process("product/registration.html", context, resp.getWriter());
@@ -37,8 +34,6 @@ public class RegistrationController extends HttpServlet {
             throws ServletException, IOException {
         try {
             User user;
-            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-            WebContext context = new WebContext(request, response, request.getServletContext());
             PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
             String name = request.getParameter("name");
             String email = request.getParameter("email");
@@ -93,5 +88,11 @@ public class RegistrationController extends HttpServlet {
         return false;
     }
 
+    public static String getSystemAdminEmail1() {
+        return SYSTEM_ADMIN_EMAIL_1;
+    }
 
+    public static String getSystemAdminEmail2() {
+        return SYSTEM_ADMIN_EMAIL_2;
+    }
 }

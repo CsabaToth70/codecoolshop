@@ -29,12 +29,9 @@ public class AdminController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-            WebContext context = new WebContext(request, response, request.getServletContext());
             PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String token = passwordAuthentication.hash(password);
             ShopDatabaseManager shopDatabaseManager = Initializer.shopDatabaseManager;
             HttpSession session = request.getSession();
             if (shopDatabaseManager.getUser(email) != null) {

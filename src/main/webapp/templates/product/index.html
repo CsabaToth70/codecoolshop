@@ -2,10 +2,10 @@
 <html lang="hu" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:background-image="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
 <head>
-<!--    <meta charset="utf-8" />-->
+    <!--    <meta charset="utf-8" />-->
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>Codecool Shop</title>
 
@@ -16,27 +16,29 @@
 
     <!--Latest compiled and minified Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 </head>
 
 <body>
 
-<div class="headerLine"; id="myHeader">
+<div class="headerLine" ; id="myHeader">
     <h1 id="headText">Codecool Shop</h1>
 
-        <p><a class="cart" href="/cart"> <img style="width: 50px; margin-right: 45px; vertical-align: middle;
-    float: right" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/cart.png'" alt="" /></a></p>
+    <p><a class="cart" href="/cart"> <img style="width: 50px; margin-right: 45px; vertical-align: middle;
+    float: right" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/cart.png'" alt=""/></a></p>
     <form action="/registration">
         <button style="height: fit-content; width: 90px; border-radius: 8px; margin: 4px 6px">Sign up</button>
     </form>
@@ -62,26 +64,29 @@
     <div class="card">
         <form method="post">
             <select th:field="${categoryList}" name="categoryList">
-                <option th:each="category,iterStat : ${categoryList}" th:value="${category.getId()}" th:text="${category.getName()}">
+                <option th:each="category,iterStat : ${categoryList}" th:value="${category.getId()}"
+                        th:text="${category.getName()}">
                 </option>
             </select>
             <input type="hidden" name="dropdown" value="category">
-            <input type = "submit" value = "Submit" />
+            <input type="submit" value="Submit"/>
         </form>
         <form method="post">
             <select th:field="${supplierList}" name="supplierList">
-                <option th:each="supplier,iterStat : ${supplierList}" th:value="${supplier.getId()}" th:text="${supplier.getName()}">
+                <option th:each="supplier,iterStat : ${supplierList}" th:value="${supplier.getId()}"
+                        th:text="${supplier.getName()}">
                 </option>
             </select>
             <input type="hidden" name="dropdown" value="supplier">
-            <input type = "submit" value = "Submit" />
+            <input type="submit" value="Submit"/>
         </form>
     </div>
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="" src="http://placehold.it/400x250/000/fff"
+                     th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                     <p class="card-text" th:text="${prod.description}">Product description... </p>
@@ -93,7 +98,7 @@
                     <div class="card-text">
                         <form method="post">
                             <input type="hidden" name="addToCart" th:value="${prod.id}">
-                            <input class="btn btn-success" type="submit" value = "Add to cart" >
+                            <input class="btn btn-success" type="submit" value="Add to cart">
                         </form>
                     </div>
                 </div>
@@ -102,25 +107,13 @@
     </div>
 
 </div>
-<a href="http://localhost:8888/admin">Admin</a>
-<!--<form action="/admin" style="margin-right: 45px;">-->
-<!--    <button style="height: fit-content; color: gray; background-color: white; border: white; border-radius: 8px; margin: 4px 6px"><u>Admin</u></button>-->
-<!--</form>-->
+<span th:if="${session.oneOfSysadmins} == loggedIn">
+
+    <a href="http://localhost:8888/admin">Admin</a>
+
+</span>
+
 <div th:replace="footer.html :: copy"></div>
 
-<script>
-    window.onscroll = function() {myFunction()};
-
-    var header = document.getElementById("myHeader");
-    var sticky = header.offsetTop;
-
-    function myFunction() {
-        if (window.pageYOffset > sticky) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
-    }
-</script>
 </body>
 </html>

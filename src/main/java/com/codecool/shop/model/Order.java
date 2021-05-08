@@ -19,7 +19,7 @@ public class Order implements Serializable {
     private ArrayList<Product> items;
     private int total;
 
-    public Order (int id, String firstName, String lastName, String email, String phoneNumber, String country, String city, String address, int zipCode, ArrayList<Product> items, int total) {
+    public Order(int id, String firstName, String lastName, String email, String phoneNumber, String country, String city, String address, int zipCode, ArrayList<Product> items, int total) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -73,7 +73,7 @@ public class Order implements Serializable {
         this.email = email;
     }
 
-    public String  getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -121,12 +121,6 @@ public class Order implements Serializable {
         this.items = items;
     }
 
-//    private void writeObject(ObjectOutputStream out) throws IOException {
-//
-//    }
-//    private void readObject(ObjectInputStream in)
-//            throws IOException, ClassNotFoundException {
-//    }
     private void writeObject(ObjectOutputStream oos)
             throws IOException {
         oos.defaultWriteObject();
@@ -140,6 +134,7 @@ public class Order implements Serializable {
         Integer a = total;
         this.setTotal(a);
     }
+
     @Override
     public String toString() {
         return "Order{" +
