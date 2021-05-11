@@ -9,7 +9,7 @@ public class ProductCategory extends BaseModel implements Serializable {
     private transient List<Product> products;
 
     public ProductCategory(String name, String department, String description) {
-        super(name);
+        super(name, description);
         this.department = department;
         this.products = new ArrayList<>();
     }

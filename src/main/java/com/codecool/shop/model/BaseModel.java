@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 
+import javax.xml.transform.sax.SAXResult;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 
@@ -10,9 +11,9 @@ public class BaseModel implements Serializable {
     protected String name;
     protected String description;
 
-    public BaseModel(String name) {
-        this.name = name;
-    }
+//    public BaseModel(String name) {
+//        this.name = name;
+//    }
 
     public BaseModel(String name, String description) {
         this.name = name;
