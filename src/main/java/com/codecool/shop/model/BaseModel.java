@@ -51,12 +51,12 @@ public class BaseModel implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BaseModel baseModel = (BaseModel) o;
-        return id == baseModel.id && Objects.equals(name, baseModel.name) && Objects.equals(description, baseModel.description);
+        return Objects.equals(name, baseModel.name) && Objects.equals(description, baseModel.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description);
+        return Objects.hash(name, description);
     }
 
     @Override

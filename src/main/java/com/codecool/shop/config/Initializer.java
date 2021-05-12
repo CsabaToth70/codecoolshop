@@ -54,6 +54,7 @@ public class Initializer implements ServletContextListener {
         supplierList.add(lenovo);
         supplierList.add(wacom);
         supplierList.add(asus);
+        supplierList.add(dell);
 
         for (Supplier supplierFromMemory : supplierList) {
             if (!shopDatabaseManager.getAllSuppliers().contains(supplierFromMemory)) {

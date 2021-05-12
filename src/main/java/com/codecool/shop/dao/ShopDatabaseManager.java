@@ -59,6 +59,10 @@ public class ShopDatabaseManager {
         return supplier;
     }
 
+    public void deleteSupplierBy(int id){
+        supplierDao.remove(id);
+    }
+
     public void addProduct(Product product){
         productDao.add(product);
     }
