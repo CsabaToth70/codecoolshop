@@ -7,7 +7,10 @@ import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.codecool.shop.config.Initializer.shopDatabaseManager;
 
 public class ProductDaoJdbc implements ProductDao {
     private DataSource dataSource;
@@ -19,13 +22,15 @@ public class ProductDaoJdbc implements ProductDao {
     @Override
     public void add(Product product) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO products (name, price, product_category_name, supplier_name, description) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO products (name, price, currency, description, product_category_id, supplier_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
-            statement.setString(3, product.getProductCategory().getName());
-            statement.setString(4, product.getSupplier().getName());
-            statement.setString(5, product.getDescription());
+            statement.setString(3, product.getDefaultCurrency().getCurrencyCode());
+            statement.setString(4, product.getDescription());
+            statement.setInt(5, product.getProductCategory().getId());
+            statement.setInt(6, product.getSupplier().getId());
+
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
@@ -46,7 +51,31 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, name, price, currency, description, product_category_id, supplier_id FROM products";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            List<Product> productList = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                double price = rs.getDouble(3);
+                String currency = rs.getString(4);
+                String description = rs.getString(5);
+                int product_category_id = rs.getInt(6);
+                int supplier_id = rs.getInt(7);
+                ProductCategory product_category = shopDatabaseManager.findProductCategory(product_category_id);
+                Supplier supplier = shopDatabaseManager.findSupplier(supplier_id);
+
+                Product product = new Product(name, price, currency, description, product_category, supplier);
+                product.setId(id);
+                productList.add(product);
+            }
+            return productList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

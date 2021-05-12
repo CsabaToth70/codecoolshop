@@ -3,6 +3,7 @@ package com.codecool.shop.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Supplier extends BaseModel implements Serializable {
     private transient List<Product> products;
@@ -23,6 +24,8 @@ public class Supplier extends BaseModel implements Serializable {
     public void addProduct(Product product) {
         this.products.add(product);
     }
+
+
 
     @Override
     public String toString() {

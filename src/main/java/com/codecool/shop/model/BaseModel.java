@@ -4,6 +4,7 @@ package com.codecool.shop.model;
 import javax.xml.transform.sax.SAXResult;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 public class BaseModel implements Serializable {
 
@@ -43,6 +44,19 @@ public class BaseModel implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseModel baseModel = (BaseModel) o;
+        return id == baseModel.id && Objects.equals(name, baseModel.name) && Objects.equals(description, baseModel.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description);
     }
 
     @Override

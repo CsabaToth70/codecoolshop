@@ -9,9 +9,10 @@ CREATE TABLE products
     id                    serial  NOT NULL PRIMARY KEY,
     name                  text,
     price                 float,
-    product_category_name text,
-    supplier_name         text,
-    description           text
+    currency              text,
+    description           text,
+    product_category_id   integer NOT NULL,
+    supplier_id           integer NOT NULL
 );
 
 DROP TABLE IF EXISTS suppliers;
@@ -102,7 +103,7 @@ ALTER TABLE ONLY shippings
     ADD CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders (id);
 
 ALTER TABLE ONLY products
-    ADD CONSTRAINT fk_product_category_name FOREIGN KEY (product_category_name) REFERENCES product_categories (name);
+    ADD CONSTRAINT fk_product_category_id FOREIGN KEY (product_category_id) REFERENCES product_categories (id);
 
 ALTER TABLE ONLY products
-    ADD CONSTRAINT fk_supplier_name FOREIGN KEY (supplier_name) REFERENCES suppliers (name);
+    ADD CONSTRAINT fk_supplier_id FOREIGN KEY (supplier_id) REFERENCES suppliers (id);

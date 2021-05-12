@@ -46,17 +46,20 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(wacom);
         Supplier asus = new Supplier("Asus", "Computers");
         supplierDataStore.add(asus);
+        Supplier dell = new Supplier("Dell", "Computers");
+        supplierDataStore.add(dell);
 
-
-//        shopDatabaseManager.addSupplier(amazon);
-//        shopDatabaseManager.addSupplier(lenovo);
-//        shopDatabaseManager.addSupplier(wacom);
-//        shopDatabaseManager.addSupplier(asus);
 
         supplierList.add(amazon);
         supplierList.add(lenovo);
         supplierList.add(wacom);
         supplierList.add(asus);
+
+        for (Supplier supplierFromMemory : supplierList) {
+            if (!shopDatabaseManager.getAllSuppliers().contains(supplierFromMemory)) {
+                shopDatabaseManager.addSupplier(supplierFromMemory);
+            }
+        }
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
@@ -80,6 +83,12 @@ public class Initializer implements ServletContextListener {
         categoryList.add(penComputer);
         categoryList.add(penDisplay);
         categoryList.add(penTablet);
+
+        for (ProductCategory categoryFromMemory : categoryList) {
+            if (!shopDatabaseManager.getAllProductCategory().contains(categoryFromMemory)) {
+                shopDatabaseManager.addProductCategory(categoryFromMemory);
+            }
+        }
 
         //setting up products and printing it
         Product product_1 = new Product("Amazon Fire", 49.9d, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon);

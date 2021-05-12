@@ -16,6 +16,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -79,4 +80,17 @@ public class ShopDatabaseManager {
         return dataSource;
     }
 
+    public List<ProductCategory> getAllProductCategory() {
+        return productCategoryDao.getAll();
+    }
+
+    public ProductCategory findProductCategory(int product_category_id) {
+        ProductCategory productCategory = productCategoryDao.find(product_category_id);
+        return productCategory;
+    }
+
+    public Supplier findSupplier(int supplier_id) {
+        Supplier supplier = supplierDao.find(supplier_id);
+        return supplier;
+    }
 }
