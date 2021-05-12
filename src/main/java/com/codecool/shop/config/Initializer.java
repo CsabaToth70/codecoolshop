@@ -36,6 +36,7 @@ public class Initializer implements ServletContextListener {
 
         runDatabase();
 
+
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
         supplierDataStore.add(amazon);
@@ -46,10 +47,11 @@ public class Initializer implements ServletContextListener {
         Supplier asus = new Supplier("Asus", "Computers");
         supplierDataStore.add(asus);
 
-        shopDatabaseManager.addSupplier(amazon);
-        shopDatabaseManager.addSupplier(lenovo);
-        shopDatabaseManager.addSupplier(wacom);
-        shopDatabaseManager.addSupplier(asus);
+
+//        shopDatabaseManager.addSupplier(amazon);
+//        shopDatabaseManager.addSupplier(lenovo);
+//        shopDatabaseManager.addSupplier(wacom);
+//        shopDatabaseManager.addSupplier(asus);
 
         supplierList.add(amazon);
         supplierList.add(lenovo);
@@ -67,11 +69,11 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(penComputer);
         productCategoryDataStore.add(penDisplay);
         productCategoryDataStore.add(penTablet);
-        shopDatabaseManager.addProductCategory(tablet);
-        shopDatabaseManager.addProductCategory(laptop);
-        shopDatabaseManager.addProductCategory(penComputer);
-        shopDatabaseManager.addProductCategory(penDisplay);
-        shopDatabaseManager.addProductCategory(penTablet);
+//        shopDatabaseManager.addProductCategory(tablet);
+//        shopDatabaseManager.addProductCategory(laptop);
+//        shopDatabaseManager.addProductCategory(penComputer);
+//        shopDatabaseManager.addProductCategory(penDisplay);
+//        shopDatabaseManager.addProductCategory(penTablet);
 
         categoryList.add(tablet);
         categoryList.add(laptop);
@@ -113,20 +115,20 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(product_14);
 
 
-        shopDatabaseManager.addProduct(product_1);
-        shopDatabaseManager.addProduct(product_2);
-        shopDatabaseManager.addProduct(product_3);
-        shopDatabaseManager.addProduct(product_4);
-        shopDatabaseManager.addProduct(product_5);
-        shopDatabaseManager.addProduct(product_6);
-        shopDatabaseManager.addProduct(product_7);
-        shopDatabaseManager.addProduct(product_8);
-        shopDatabaseManager.addProduct(product_9);
-        shopDatabaseManager.addProduct(product_10);
-        shopDatabaseManager.addProduct(product_11);
-        shopDatabaseManager.addProduct(product_12);
-        shopDatabaseManager.addProduct(product_13);
-        shopDatabaseManager.addProduct(product_14);
+//        shopDatabaseManager.addProduct(product_1);
+//        shopDatabaseManager.addProduct(product_2);
+//        shopDatabaseManager.addProduct(product_3);
+//        shopDatabaseManager.addProduct(product_4);
+//        shopDatabaseManager.addProduct(product_5);
+//        shopDatabaseManager.addProduct(product_6);
+//        shopDatabaseManager.addProduct(product_7);
+//        shopDatabaseManager.addProduct(product_8);
+//        shopDatabaseManager.addProduct(product_9);
+//        shopDatabaseManager.addProduct(product_10);
+//        shopDatabaseManager.addProduct(product_11);
+//        shopDatabaseManager.addProduct(product_12);
+//        shopDatabaseManager.addProduct(product_13);
+//        shopDatabaseManager.addProduct(product_14);
     }
 
     private void runDatabase() {

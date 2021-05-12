@@ -16,6 +16,8 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Set;
 
 public class ShopDatabaseManager {
     private UserDao userDao;
@@ -53,6 +55,10 @@ public class ShopDatabaseManager {
 
     public void addProduct(Product product){
         productDao.add(product);
+    }
+
+    public List<Supplier> getAllSuppliers(){
+        return supplierDao.getAll();
     }
 
 
