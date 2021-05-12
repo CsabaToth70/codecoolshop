@@ -17,14 +17,16 @@ CREATE TABLE products
 DROP TABLE IF EXISTS suppliers;
 CREATE TABLE suppliers
 (
-    name        text PRIMARY KEY,
+    id          serial  NOT NULL PRIMARY KEY,
+    name        text,
     description text
 );
 
 DROP TABLE IF EXISTS product_categories;
 CREATE TABLE product_categories
 (
-    name        text PRIMARY KEY,
+    id          serial  NOT NULL PRIMARY KEY,
+    name        text,
     department  text,
     description text
 );
