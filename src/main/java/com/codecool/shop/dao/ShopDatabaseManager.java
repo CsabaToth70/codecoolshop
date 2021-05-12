@@ -46,20 +46,38 @@ public class ShopDatabaseManager {
         return user;
     }
 
-    public void addProductCategory(ProductCategory productCategory){
-        productCategoryDao.add(productCategory);
-    }
-
     public void addSupplier(Supplier supplier){
         supplierDao.add(supplier);
+    }
+
+    public List<Supplier> getAllSuppliers(){
+        return supplierDao.getAll();
+    }
+
+    public Supplier findSupplier(int supplier_id) {
+        Supplier supplier = supplierDao.find(supplier_id);
+        return supplier;
     }
 
     public void addProduct(Product product){
         productDao.add(product);
     }
 
-    public List<Supplier> getAllSuppliers(){
-        return supplierDao.getAll();
+    public List<Product> getAllProduct() {
+        return productDao.getAll();
+    }
+
+    public void addProductCategory(ProductCategory productCategory){
+        productCategoryDao.add(productCategory);
+    }
+
+    public List<ProductCategory> getAllProductCategory() {
+        return productCategoryDao.getAll();
+    }
+
+    public ProductCategory findProductCategory(int product_category_id) {
+        ProductCategory productCategory = productCategoryDao.find(product_category_id);
+        return productCategory;
     }
 
 
@@ -80,17 +98,5 @@ public class ShopDatabaseManager {
         return dataSource;
     }
 
-    public List<ProductCategory> getAllProductCategory() {
-        return productCategoryDao.getAll();
-    }
 
-    public ProductCategory findProductCategory(int product_category_id) {
-        ProductCategory productCategory = productCategoryDao.find(product_category_id);
-        return productCategory;
-    }
-
-    public Supplier findSupplier(int supplier_id) {
-        Supplier supplier = supplierDao.find(supplier_id);
-        return supplier;
-    }
 }

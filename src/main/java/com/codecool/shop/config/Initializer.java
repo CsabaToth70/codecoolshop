@@ -72,11 +72,6 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(penComputer);
         productCategoryDataStore.add(penDisplay);
         productCategoryDataStore.add(penTablet);
-//        shopDatabaseManager.addProductCategory(tablet);
-//        shopDatabaseManager.addProductCategory(laptop);
-//        shopDatabaseManager.addProductCategory(penComputer);
-//        shopDatabaseManager.addProductCategory(penDisplay);
-//        shopDatabaseManager.addProductCategory(penTablet);
 
         categoryList.add(tablet);
         categoryList.add(laptop);
@@ -106,8 +101,6 @@ public class Initializer implements ServletContextListener {
         Product product_13 = new Product("Intuos Pro Medium", 380, "USD", "The Intuos Pro medium graphics tablet by Wacom is the ideal drawing pad for digital sketching, professional graphic & fashion design as well as photo editing, 3D sculpting, illustrating and much more.", penTablet, wacom);
         Product product_14 = new Product("Intuos Small", 80, "USD", "Clever, compact and stylish: With the Intuos tablet from Wacom, sketching or retouching photos has never been easier/with Bluetooth connection, you have everything at your fingertips.", penTablet, wacom);
 
-
-
         productDataStore.add(product_1);
         productDataStore.add(product_2);
         productDataStore.add(product_3);
@@ -123,21 +116,11 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(product_13);
         productDataStore.add(product_14);
 
-
-//        shopDatabaseManager.addProduct(product_1);
-//        shopDatabaseManager.addProduct(product_2);
-//        shopDatabaseManager.addProduct(product_3);
-//        shopDatabaseManager.addProduct(product_4);
-//        shopDatabaseManager.addProduct(product_5);
-//        shopDatabaseManager.addProduct(product_6);
-//        shopDatabaseManager.addProduct(product_7);
-//        shopDatabaseManager.addProduct(product_8);
-//        shopDatabaseManager.addProduct(product_9);
-//        shopDatabaseManager.addProduct(product_10);
-//        shopDatabaseManager.addProduct(product_11);
-//        shopDatabaseManager.addProduct(product_12);
-//        shopDatabaseManager.addProduct(product_13);
-//        shopDatabaseManager.addProduct(product_14);
+        for (Product productFromMemory : productDataStore.getAll()) {
+            if (!shopDatabaseManager.getAllProduct().contains(productFromMemory)) {
+                shopDatabaseManager.addProduct(productFromMemory);
+            }
+        }
     }
 
     private void runDatabase() {
