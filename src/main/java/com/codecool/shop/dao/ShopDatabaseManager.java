@@ -37,20 +37,20 @@ public class ShopDatabaseManager {
 
     }
 
-    public void saveUser(User user){
+    public void saveUser(User user) {
         userDao.save(user);
     }
 
-    public User getUser(String email){
+    public User getUser(String email) {
         User user = userDao.get(email);
         return user;
     }
 
-    public void addSupplier(Supplier supplier){
+    public void addSupplier(Supplier supplier) {
         supplierDao.add(supplier);
     }
 
-    public List<Supplier> getAllSuppliers(){
+    public List<Supplier> getAllSuppliers() {
         return supplierDao.getAll();
     }
 
@@ -59,11 +59,11 @@ public class ShopDatabaseManager {
         return supplier;
     }
 
-    public void deleteSupplierBy(int id){
+    public void deleteSupplierBy(int id) {
         supplierDao.remove(id);
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         productDao.add(product);
     }
 
@@ -71,7 +71,15 @@ public class ShopDatabaseManager {
         return productDao.getAll();
     }
 
-    public void addProductCategory(ProductCategory productCategory){
+    public List<Product> getProductsBySupplier(Supplier supplier) {
+        return productDao.getBy(supplier);
+    }
+
+    public List<Product> getProductsByProductCategory(ProductCategory productCategory) {
+        return productDao.getBy(productCategory);
+    }
+
+    public void addProductCategory(ProductCategory productCategory) {
         productCategoryDao.add(productCategory);
     }
 

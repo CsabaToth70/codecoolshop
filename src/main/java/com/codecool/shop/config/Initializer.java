@@ -122,6 +122,7 @@ public class Initializer implements ServletContextListener {
                 shopDatabaseManager.addProduct(productFromMemory);
             }
         }
+
     }
 
     private void runDatabase() {

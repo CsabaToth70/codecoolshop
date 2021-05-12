@@ -102,11 +102,65 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public List<Product> getBy(Supplier supplier) {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, name, price, currency, description, product_category_id, supplier_id FROM products WHERE supplier_id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, supplier.getId());
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            List<Product> productList = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                double price = rs.getDouble(3);
+                String currency = rs.getString(4);
+                String description = rs.getString(5);
+                int product_category_id = rs.getInt(6);
+                int supplier_id = rs.getInt(7);
+                ProductCategory product_category = shopDatabaseManager.findProductCategory(product_category_id);
+                Supplier tmpSupplier = shopDatabaseManager.findSupplier(supplier_id);
+                Product product = new Product(name, price, currency, description, product_category, tmpSupplier);
+                product.setId(id);
+                productList.add(product);
+            }
+            return productList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, name, price, currency, description, product_category_id, supplier_id FROM products WHERE product_category_id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, productCategory.getId());
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            List<Product> productList = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                double price = rs.getDouble(3);
+                String currency = rs.getString(4);
+                String description = rs.getString(5);
+                int product_category_id = rs.getInt(6);
+                int supplier_id = rs.getInt(7);
+                ProductCategory tmpProduct_category = shopDatabaseManager.findProductCategory(product_category_id);
+                Supplier tmpSupplier = shopDatabaseManager.findSupplier(supplier_id);
+                Product product = new Product(name, price, currency, description, tmpProduct_category, tmpSupplier);
+                product.setId(id);
+                productList.add(product);
+            }
+            return productList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
