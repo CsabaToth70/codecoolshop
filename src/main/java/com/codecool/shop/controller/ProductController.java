@@ -4,6 +4,7 @@ import com.codecool.shop.config.Initializer;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShopDatabaseManager;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
@@ -25,6 +26,7 @@ public class ProductController extends HttpServlet {
     private int categoryID = 0;
     private int supplierID = 0;
     public static ArrayList<Product> cart = new ArrayList<>();
+    private ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

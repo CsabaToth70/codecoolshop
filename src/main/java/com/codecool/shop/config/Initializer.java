@@ -14,8 +14,11 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -25,68 +28,27 @@ public class Initializer implements ServletContextListener {
     private static String shopEmailPassword;
     private static String shopEmail;
 
-
-    //  created temporary email box for testing: codecoolshopmasters@gmail.com
+    //  created temporary email box for testing this application mailing: codecoolshopmasters@gmail.com
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-
         runDatabase();
 
-
-        //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
-        supplierDataStore.add(amazon);
         Supplier lenovo = new Supplier("Lenovo", "Computers");
-        supplierDataStore.add(lenovo);
         Supplier wacom = new Supplier("Wacom", "Drawing Tablets");
-        supplierDataStore.add(wacom);
         Supplier asus = new Supplier("Asus", "Computers");
-        supplierDataStore.add(asus);
         Supplier dell = new Supplier("Dell", "Computers");
-        supplierDataStore.add(dell);
 
-
-        supplierList.add(amazon);
-        supplierList.add(lenovo);
-        supplierList.add(wacom);
-        supplierList.add(asus);
-        supplierList.add(dell);
-
-        for (Supplier supplierFromMemory : supplierList) {
-            if (!shopDatabaseManager.getAllSuppliers().contains(supplierFromMemory)) {
-                shopDatabaseManager.addSupplier(supplierFromMemory);
-            }
-        }
-
-        //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         ProductCategory penComputer = new ProductCategory("Pen Computer", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         ProductCategory penDisplay = new ProductCategory("Pen Display", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         ProductCategory penTablet = new ProductCategory("Pen Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
-        productCategoryDataStore.add(laptop);
-        productCategoryDataStore.add(penComputer);
-        productCategoryDataStore.add(penDisplay);
-        productCategoryDataStore.add(penTablet);
 
-        categoryList.add(tablet);
-        categoryList.add(laptop);
-        categoryList.add(penComputer);
-        categoryList.add(penDisplay);
-        categoryList.add(penTablet);
-
-        for (ProductCategory categoryFromMemory : categoryList) {
-            if (!shopDatabaseManager.getAllProductCategory().contains(categoryFromMemory)) {
-                shopDatabaseManager.addProductCategory(categoryFromMemory);
-            }
-        }
-
-        //setting up products and printing it
         Product product_1 = new Product("Amazon Fire", 49.9d, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon);
         Product product_2 = new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo);
         Product product_3 = new Product("Amazon Fire HD 8", 89, "USD", "Whether for work or play, ASUS X515 is the entry-level laptop that delivers powerful performance and immersive visuals.\n", tablet, amazon);
@@ -101,6 +63,18 @@ public class Initializer implements ServletContextListener {
         Product product_12 = new Product("Cintiq Pro 32", 3300, "USD", "Multi-Touch 4K Screen/32 Inch Creative Pen Display with Integrated Legs Including Wacom Pro Pen 2 Stylus with Pen Holder and Replacement Tips/Compatible with Windows and Mac.", penDisplay, wacom);
         Product product_13 = new Product("Intuos Pro Medium", 380, "USD", "The Intuos Pro medium graphics tablet by Wacom is the ideal drawing pad for digital sketching, professional graphic & fashion design as well as photo editing, 3D sculpting, illustrating and much more.", penTablet, wacom);
         Product product_14 = new Product("Intuos Small", 80, "USD", "Clever, compact and stylish: With the Intuos tablet from Wacom, sketching or retouching photos has never been easier/with Bluetooth connection, you have everything at your fingertips.", penTablet, wacom);
+
+        supplierDataStore.add(amazon);
+        supplierDataStore.add(lenovo);
+        supplierDataStore.add(wacom);
+        supplierDataStore.add(asus);
+        supplierDataStore.add(dell);
+
+        productCategoryDataStore.add(tablet);
+        productCategoryDataStore.add(laptop);
+        productCategoryDataStore.add(penComputer);
+        productCategoryDataStore.add(penDisplay);
+        productCategoryDataStore.add(penTablet);
 
         productDataStore.add(product_1);
         productDataStore.add(product_2);
@@ -117,10 +91,55 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(product_13);
         productDataStore.add(product_14);
 
-        for (Product productFromMemory : productDataStore.getAll()) {
-            if (!shopDatabaseManager.getAllProduct().contains(productFromMemory)) {
-                shopDatabaseManager.addProduct(productFromMemory);
+        String rootPath = System.getProperty("user.dir");
+        String appConfigPath = rootPath + "/connection.properties";
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+            String daoImplementation = appProps.getProperty("dao");
+
+            if (daoImplementation.equals("memory")) {
+
+                System.out.println("\nStarting backend by MEMORY-based DAO implementation\n");
+
+                supplierList.add(amazon);
+                supplierList.add(lenovo);
+                supplierList.add(wacom);
+                supplierList.add(asus);
+                supplierList.add(dell);
+
+                categoryList.add(tablet);
+                categoryList.add(laptop);
+                categoryList.add(penComputer);
+                categoryList.add(penDisplay);
+                categoryList.add(penTablet);
+
+            } else {
+                System.out.println("\nStarting backend by SQL-based DAO implementation\n");
+
+                for (Supplier supplierFromMemory : supplierDataStore.getAll()) {
+                    if (!shopDatabaseManager.getAllSuppliers().contains(supplierFromMemory)) {
+                        shopDatabaseManager.addSupplier(supplierFromMemory);
+                    }
+                }
+
+                for (ProductCategory categoryFromMemory : productCategoryDataStore.getAll()) {
+                    if (!shopDatabaseManager.getAllProductCategory().contains(categoryFromMemory)) {
+                        shopDatabaseManager.addProductCategory(categoryFromMemory);
+                    }
+                }
+
+                for (Product productFromMemory : productDataStore.getAll()) {
+                    if (!shopDatabaseManager.getAllProduct().contains(productFromMemory)) {
+                        shopDatabaseManager.addProduct(productFromMemory);
+                    }
+                }
+
+
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
