@@ -6,6 +6,18 @@ The Codecool shop was two sprints teamwork project in the java-based OOP module 
 The main aim was to learn and experience that how can different technologies cooperate and fit together.
 The project includes some basic unit tests linked to the cart activities of the user. 
 
+## Functional information for users
+
+The starting page of the shop contains selection fields by product categories and providers and the image of the product
+from one same product category. The user can browse within the product database and can place the product into the cart. 
+When the user finishes the product selections, can move forward to check-in and payment pages or can go back and modify 
+the order.
+Users can register to the shop when they receive a confirmation mail into their mailbox.
+
+The store has an admin interface where the mailbox of the shop can be defined by the proper person who has admin 
+permission for it. The link to the admin sheet is only displayed when one of the admin persons is logged in.
+
+
 ## Technologies
 
 ![](tech_logos.png)
@@ -36,3 +48,9 @@ The runnable version can be found on the development branch of the repository.
    psql -U <username> <name_of_database> < init_db.sql
 
 4. Configure your created database within your IDE
+
+## How to run
+
+You need a running web server for the operation of the webshop.
+We applied Jetty server for this aim, with the further command: 
+jetty:run -Djetty.port=8888
